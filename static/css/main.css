@@ -63,6 +63,14 @@ nav a:hover {
     width: 36%;
 }
 
+input[type=submit] {
+    border: none;
+}
+
+.end-puttsesh-submit {
+    background: #ee0000;
+}
+
 /* END HOME TEMPLATE STYLES */
 
 /* NEW SESSION STYLES */

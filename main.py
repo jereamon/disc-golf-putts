@@ -11,8 +11,7 @@ app.secret_key = os.environ.get('SECRET_KEY').encode()
 distances = [18, 21, 24, 27, 30, 33]
 
 
-@app.route('/')
-def home():
+def get_averages():
     putt_avgs = {}
     for distance in distances:
         temp_list = []
@@ -41,6 +40,13 @@ def home():
     today_putt_avgs['18-33'] = round(sum(today_putt_avgs.values()) /
                                      len(today_putt_avgs.values()), 2)
 
+    return (putt_avgs, today_putt_avgs)
+
+
+@app.route('/')
+def home():
+    putt_avgs, today_putt_avgs = get_averages()
+
     return render_template('home.jinja2', putt_avgs=putt_avgs,
                            today_putt_avgs=today_putt_avgs)
 
@@ -68,6 +74,8 @@ def new_puttsesh():
 
 @app.route('/putt', methods=['GET', 'POST'])
 def putt():
+    putt_avgs, today_putt_avgs = get_averages()
+
     if request.method == "POST":
         if request.form['action'] == 'End Putting Session':
             session.pop('distance', None)
@@ -103,9 +111,10 @@ def putt():
     distance = distances[session.get('distance')]
 
     # distance = 0
-    return render_template('putt.jinja2', distance=distance)
+    return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6789))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)

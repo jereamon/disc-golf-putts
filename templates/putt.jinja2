@@ -15,8 +15,20 @@
         <input name='action' type='submit' value='Submit Putts Made'>
     </form>
 
+    <div class="putt-avgs-outer-container">
+        <h2>Today's Averages</h2>
+        <div class="putt-avgs-inner-container">
+            {% for putt_avg in today_putt_avgs %}
+                <div class='putt-avg-container'>
+                    <h5>{{ putt_avg }}'</h5>
+                    <p>{{ today_putt_avgs[putt_avg] }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <form method='POST' class='putt-page-form'>
-        <input name='action' type='submit' value='End Putting Session'>
+        <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
     </form>
 </div>
 {% endblock content %}
