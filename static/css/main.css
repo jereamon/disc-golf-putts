@@ -64,7 +64,7 @@ nav a:hover {
 
 @media only screen and (max-width: 480px) {
     * {
-        font-size: 18px;
+        /* font-size: 18px; */
     }
 }
 
@@ -103,8 +103,8 @@ nav a:hover {
 .cur-dist-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 10px 0;
+    text-align: center;
 }
 
 .outer-container.putt-page {
