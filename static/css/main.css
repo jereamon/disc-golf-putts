@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    /* font-size: 33px; */
+    margin: 0;
+    padding: 0;
+}
+
+
+/* BASE TEMPLATE STYLES */
+
+nav {
+    background: #efefef;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav a {
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: 300ms;
+}
+
+nav a:hover {
+    background: #333;
+    color: #efefef;
+}
+
+.outer-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 25px 0 0 0;
+    width: 100%;
+}
+
+/* END BASE TEMPLATE STYLES */
+/* HOME TEMPLATE STYLES */
+
+.putt-avgs-outer-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+}
+
+.putt-avgs-outer-container h2 {
+    padding: 0 0 10px 0;
+}
+
+.putt-avgs-inner-container {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.putt-avg-container {
+    box-shadow: 1px 1px 3px 0px rgba(51,51,51,0.15);
+    padding: 5px 0;
+    text-align: center;
+    width: 36%;
+}
+
+@media only screen and (max-width: 480px) {
+    * {
+        font-size: 18px;
+    }
+}
+
+/* END HOME TEMPLATE STYLES */
+/* NEW SESSION STYLES */
+
+.puttsesh-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.puttsesh-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    padding: 10px 0;
+}
+
+.puttsesh-form input[type=submit], .putt-page-form input[type=submit] {
+    border-radius: 2px;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: 10px 0;
+}
+
+/* END NEW SESSION STYLES */
+
+/* PUTT TEMPLATE STYLES */
+
+.cur-dist-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.outer-container.putt-page {
+    flex-direction: column;
+    align-items: center;
+}
+
+.putt-page-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* END PUTT TEMPLATE STYLES */

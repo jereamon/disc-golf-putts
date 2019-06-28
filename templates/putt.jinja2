@@ -1,0 +1,22 @@
+{% extends "base.jinja2" %}
+
+{% block content %}
+<div class='outer-container putt-page'>
+    <div class="cur-dist-container">
+        <h4>Current Distance</h4>
+        <p>{{ distance }}</p>
+    </div>
+    <form method='POST' class='putt-page-form'>
+        <label>
+            Number of Putts Made
+            <input type='number' name='no_putts'>
+        </label>
+
+        <input name='action' type='submit' value='Submit Putts Made'>
+    </form>
+
+    <form method='POST' class='putt-page-form'>
+        <input name='action' type='submit' value='End Putting Session'>
+    </form>
+</div>
+{% endblock content %}

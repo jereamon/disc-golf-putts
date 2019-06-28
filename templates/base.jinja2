@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Disc Golf Putts</title>
+<link rel='stylesheet' href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+	<nav>
+		<a href="{{ url_for('home') }}">Home</a>
+		<a href="{{ url_for('new_puttsesh') }}">New Session</a>
+	</nav>
+	{% block content %} {% endblock content %}
+</body>
+</html>
