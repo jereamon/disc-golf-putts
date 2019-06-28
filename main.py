@@ -5,7 +5,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from model import PuttSesh, Putt
 
 app = Flask(__name__)
-app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
+# app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
+app.secret_key = os.environ('SECRET_KEY').encode()
 
 distances = [18, 21, 24, 27, 30, 33]
 
