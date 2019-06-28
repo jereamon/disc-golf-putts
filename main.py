@@ -101,7 +101,7 @@ def putt():
 
             distance = distances[session.get('distance')]
 
-        return render_template('putt.jinja2', distance=distance)
+        return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
 
     if session.get('rand_or_no', None) == 'rand-dist':
         distance = random.choice(distances)
