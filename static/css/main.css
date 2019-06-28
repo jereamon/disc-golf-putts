@@ -45,6 +45,7 @@ nav a:hover {
 
 .putt-avgs-outer-container h2 {
     padding: 0 0 10px 0;
+    text-align: center;
 }
 
 .putt-avgs-inner-container {
@@ -60,12 +61,6 @@ nav a:hover {
     padding: 5px 0;
     text-align: center;
     width: 36%;
-}
-
-@media only screen and (max-width: 480px) {
-    * {
-        /* font-size: 18px; */
-    }
 }
 
 /* END HOME TEMPLATE STYLES */
