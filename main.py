@@ -51,11 +51,6 @@ def home():
                            today_putt_avgs=today_putt_avgs)
 
 
-@app.route('/day/<date>')
-def day(date):
-    return render_template('day.jinja2')
-
-
 @app.route('/new-puttsesh', methods=['GET', 'POST'])
 def new_puttsesh():
     if request.method == "POST":
