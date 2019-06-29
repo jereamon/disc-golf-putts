@@ -1,0 +1,10 @@
+{% extends "base.jinja2" %}
+
+{% block content %}
+{% for session in all_sessions %}
+<a href="{{ url_for('view_puttsesh_single', sesh_id=session.id) }}">
+    <h3>Id:{{ session.id }} Date:{{ session.date.strftime('%Y-%m-%d %I:%M') }}</h3>
+    <p>No. Putters:{{ session.no_putters }}</p>
+</a>
+{% endfor %}
+{% endblock content %}

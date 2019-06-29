@@ -1,0 +1,18 @@
+{% extends "base.jinja2" %}
+
+{% block content %}
+<div>
+    <div>
+        <h3>Id:{{ single_session.id }} Date:{{ single_session.date.strftime('%Y-%m-%d %I:%M')}}</h3>
+        <p>No. Putters:{{ single_session.no_putters }}</p>
+    </div>
+    <div>
+        {% for putt in putts %}
+        <div>
+            <p>Putts Made:{{ putt.putts_made }}</p>
+            <p>Distance:{{ putt.distance }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

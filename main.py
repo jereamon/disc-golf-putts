@@ -51,7 +51,7 @@ def home():
                            today_putt_avgs=today_putt_avgs)
 
 
-@app.route('/new-puttsesh', methods=['GET', 'POST'])
+@app.route('/puttsesh/new', methods=['GET', 'POST'])
 def new_puttsesh():
     if request.method == "POST":
         no_putters = request.form['no-putters']
@@ -67,6 +67,20 @@ def new_puttsesh():
     return render_template('new_puttsesh.jinja2')
 
 
+@app.route('/puttsesh/view')
+def view_puttsesh():
+    all_sessions = PuttSesh.select()
+    return render_template('view_puttsesh.jinja2', all_sessions=all_sessions)
+
+
+@app.route('/puttsesh/view/<sesh_id>', methods=['GET', 'POST'])
+def view_puttsesh_single(sesh_id):
+    single_session = PuttSesh.select().where(PuttSesh.id == sesh_id).get()
+    associated_putts = Putt.select().where(Putt.putt_sesh == single_session)
+
+    return render_template('view_puttsesh_single.jinja2', single_session=single_session, putts=associated_putts)
+
+
 @app.route('/putt', methods=['GET', 'POST'])
 def putt():
     if request.method == "POST":
@@ -78,7 +92,6 @@ def putt():
         new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=request.form.get(
             'no_putts'), distance=distances[session.get('distance')])
         new_putt.save()
-
 
         if session.get('rand_or_no', None) == 'rand-dist':
             distance = random.choice(distances)
