@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+import datetime
 import random
 from flask import Flask, render_template, request, redirect, url_for, session
 from model import PuttSesh, Putt
@@ -58,7 +58,10 @@ def new_puttsesh():
         # specifies whether to increment putting distance or have random distances
         session['rand_or_no'] = request.form['rand-or-no']
 
-        new_puttsesh = PuttSesh(date=datetime.now(), no_putters=no_putters)
+        # This is necessary because the heroku server is set to UTC
+        current_time = datetime.datetime.now() - datetime.timedelta(hours=7)
+        # current_time = datetime.datetime.now()
+        new_puttsesh = PuttSesh(date=current_time, no_putters=no_putters)
         new_puttsesh.save()
         session['current_sesh_id'] = new_puttsesh.id
 
