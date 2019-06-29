@@ -74,8 +74,6 @@ def new_puttsesh():
 
 @app.route('/putt', methods=['GET', 'POST'])
 def putt():
-    putt_avgs, today_putt_avgs = get_averages()
-
     if request.method == "POST":
         if request.form['action'] == 'End Putting Session':
             session.pop('distance', None)
@@ -101,6 +99,7 @@ def putt():
 
             distance = distances[session.get('distance')]
 
+        putt_avgs, today_putt_avgs = get_averages()
         return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
 
     if session.get('rand_or_no', None) == 'rand-dist':
@@ -111,6 +110,7 @@ def putt():
     distance = distances[session.get('distance')]
 
     # distance = 0
+    putt_avgs, today_putt_avgs = get_averages()
     return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
 
 
