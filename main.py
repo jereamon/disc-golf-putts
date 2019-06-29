@@ -29,7 +29,7 @@ def get_averages():
     for distance in distances:
         temp_list = []
         for putt in Putt.select().where(Putt.distance == distance):
-            if putt.putt_sesh.date.date() == datetime.today().date():
+            if putt.putt_sesh.date.date() == datetime.datetime.today().date():
                 no_putters = putt.putt_sesh.no_putters
                 temp_list.append(round((putt.putts_made / no_putters), 2))
         try:
