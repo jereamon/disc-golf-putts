@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from model import db, PuttSesh, Putt
 
 db.connect()
@@ -6,7 +6,7 @@ db.connect()
 # db.drop_tables([PuttSesh, Putt])
 # db.create_tables([PuttSesh, Putt])
 
-new_puttsesh = PuttSesh(date=datetime.now(), no_putters=20)
+new_puttsesh = PuttSesh(date=(datetime.now() - timedelta(hours=7)), no_putters=20)
 new_puttsesh.save()
 old_puttsesh = PuttSesh(date='2019-06-28', no_putters=20)
 old_puttsesh.save()
