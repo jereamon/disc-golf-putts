@@ -78,6 +78,19 @@ def view_puttsesh():
 
 @app.route('/puttsesh/view/<sesh_id>', methods=['GET', 'POST'])
 def view_puttsesh_single(sesh_id):
+    if request.method == "POST":
+        if request.form.get('puttsesh-id'):
+            puttsesh_id = request.form.get('puttsesh-id')
+            session_to_del = PuttSesh.select().where(PuttSesh.id == puttsesh_id).get()
+
+            session_to_del.delete_instance(session_to_del)
+
+            return redirect(url_for('view_puttsesh'))
+        if request.form.get('putt-id'):
+            putt_id = request.form.get('putt-id')
+            putt_to_del = Putt.select().where(Putt.id == putt_id).get()
+
+            putt_to_del.delete_instance(putt_to_del)
     single_session = PuttSesh.select().where(PuttSesh.id == sesh_id).get()
     associated_putts = Putt.select().where(Putt.putt_sesh == single_session)
 

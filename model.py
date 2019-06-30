@@ -18,7 +18,7 @@ class PuttSesh(Model):
 
 
 class Putt(Model):
-    putt_sesh = ForeignKeyField(PuttSesh)
+    putt_sesh = ForeignKeyField(PuttSesh, on_delete='CASCADE')
     putts_made = IntegerField()
     distance = IntegerField()
 

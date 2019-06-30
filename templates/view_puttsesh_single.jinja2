@@ -3,16 +3,29 @@
 {% block content %}
 <div>
     <div>
-        <h3>Id:{{ single_session.id }} Date:{{ single_session.date.strftime('%Y-%m-%d %I:%M')}}</h3>
-        <p>No. Putters:{{ single_session.no_putters }}</p>
+        <div>
+            <h3>Id:{{ single_session.id }} Date:{{ single_session.date.strftime('%Y-%m-%d %I:%M')}}</h3>
+            <p>No. Putters:{{ single_session.no_putters }}</p>
+        </div>
+        <div puttsesh-id="{{ single_session.id }}">
+            <button class="delete-button">Delete Session</button>
+        </div>
     </div>
     <div>
         {% for putt in putts %}
         <div>
-            <p>Putts Made:{{ putt.putts_made }}</p>
-            <p>Distance:{{ putt.distance }}</p>
+            <div>
+                <p>Putts Made:{{ putt.putts_made }}</p>
+                <p>Distance:{{ putt.distance }}</p>
+            </div>
+            <div puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">
+                <button class="delete-button">Delete Putt</button>
+            </div>
         </div>
         {% endfor %}
     </div>
 </div>
 {% endblock content %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/view_puttsesh_single.js') }}"></script>
+{% endblock scripts %}
