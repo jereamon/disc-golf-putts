@@ -1,8 +1,8 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-<div>
-    <div>
+<div class='outer-container puttsesh-container'>
+    <div class='outer-container'>
         <div>
             <h3>Id:{{ single_session.id }} Date:{{ single_session.date.strftime('%Y-%m-%d %I:%M')}}</h3>
             <p>No. Putters:{{ single_session.no_putters }}</p>
@@ -13,15 +13,15 @@
             {% endif %}
         </div>
     </div>
-    <div>
+    <div class='outer-container single-putts-outer-container'>
         {% for putt in putts %}
-        <div>
-            <div>
-                <p>Putts Made:{{ putt.putts_made }}/{{ single_session.no_putters}}</p>
-                <p>Percentage Made:{{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%</p>
-                <p>Distance:{{ putt.distance }}</p>
+        <div class='outer-container single-putt-container'>
+            <div class='single-putt-info'>
+                <p>Made:{{ putt.putts_made }}/{{ single_session.no_putters}}</p>
+                <p>{{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%</p>
+                <p>Distance:{{ putt.distance }}'</p>
             </div>
-            <div puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">
+            <div class='putt-delete-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">
                 <button class="delete-button">Delete Putt</button>
             </div>
         </div>
