@@ -8,14 +8,17 @@
             <p>No. Putters:{{ single_session.no_putters }}</p>
         </div>
         <div puttsesh-id="{{ single_session.id }}">
-            <button class="delete-button">Delete Session</button>
+            {% if session.get('current_sesh_id') != single_session.id %}
+                <button class="delete-button">Delete Session</button>
+            {% endif %}
         </div>
     </div>
     <div>
         {% for putt in putts %}
         <div>
             <div>
-                <p>Putts Made:{{ putt.putts_made }}</p>
+                <p>Putts Made:{{ putt.putts_made }}/{{ single_session.no_putters}}</p>
+                <p>Percentage Made:{{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%</p>
                 <p>Distance:{{ putt.distance }}</p>
             </div>
             <div puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">

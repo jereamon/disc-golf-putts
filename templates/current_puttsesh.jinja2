@@ -9,7 +9,7 @@
     <form method='POST' class='putt-page-form'>
         <label>
             Number of Putts Made
-            <input type='number' name='no_putts' required>
+            <input type='number' name='no_putts' max="{{ no_putters }}" required>
         </label>
 
         <input name='action' type='submit' value='Submit Putts Made'>
@@ -21,7 +21,7 @@
             {% for putt_avg in today_putt_avgs %}
                 <div class='putt-avg-container'>
                     <h5>{{ putt_avg }}'</h5>
-                    <p>{{ today_putt_avgs[putt_avg] }}</p>
+                    <p>{{ today_putt_avgs[putt_avg] }}%</p>
                 </div>
             {% endfor %}
         </div>

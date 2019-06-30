@@ -19,11 +19,11 @@ def get_averages():
             no_putters = putt.putt_sesh.no_putters
             temp_list.append(putt.putts_made / no_putters)
         try:
-            putt_avgs[distance] = round((sum(temp_list) / len(temp_list)), 2)
+            putt_avgs[distance] = int(round((sum(temp_list) / len(temp_list)), 2) * 100)
         except:
             putt_avgs[distance] = 0
-    putt_avgs['18-33'] = round((sum(putt_avgs.values()) /
-                                len(putt_avgs.values())), 2)
+    putt_avgs['18-33'] = int(round((sum(putt_avgs.values()) /
+                                len(putt_avgs.values())), 2))
 
     today_putt_avgs = {}
     for distance in distances:
@@ -33,12 +33,12 @@ def get_averages():
                 no_putters = putt.putt_sesh.no_putters
                 temp_list.append(round((putt.putts_made / no_putters), 2))
         try:
-            today_putt_avgs[distance] = round(
-                (sum(temp_list) / len(temp_list)), 2)
+            today_putt_avgs[distance] = int(round(
+                (sum(temp_list) / len(temp_list)), 2) * 100)
         except:
             today_putt_avgs[distance] = 0
-    today_putt_avgs['18-33'] = round(sum(today_putt_avgs.values()) /
-                                     len(today_putt_avgs.values()), 2)
+    today_putt_avgs['18-33'] = int(round(sum(today_putt_avgs.values()) /
+                                     len(today_putt_avgs.values()), 2))
 
     return (putt_avgs, today_putt_avgs)
 
@@ -65,9 +65,55 @@ def new_puttsesh():
         new_puttsesh.save()
         session['current_sesh_id'] = new_puttsesh.id
 
-        return redirect(url_for('putt'))
+        return redirect(url_for('current_puttsesh', sesh_id=session.get('current_sesh_id')))
 
     return render_template('new_puttsesh.jinja2')
+
+
+@app.route('/puttsesh/current/<sesh_id>', methods=['GET', 'POST'])
+def current_puttsesh(sesh_id):
+    current_session = PuttSesh.select().where(PuttSesh.id == sesh_id).get()
+
+    if request.method == "POST":
+        if request.form['action'] == 'End Putting Session':
+            session.pop('distance', None)
+            session.pop('rand_or_no', None)
+            session.pop('current_sesh_id')
+            return redirect(url_for('home'))
+
+        new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=request.form.get(
+            'no_putts'), distance=distances[session.get('distance')])
+        new_putt.save()
+
+        if session.get('rand_or_no', None) == 'rand-dist':
+            distance = random.choice(distances)
+        else:
+            if session.get('distance', None) != None:
+                if session.get('distance') + 1 > len(distances)-1:
+                    session['distance'] = 0
+                else:
+                    session['distance'] = session.get('distance') + 1
+                distance = session.get('distance')
+            else:
+                session['distance'] = 0
+
+            distance = distances[session.get('distance')]
+
+        putt_avgs, today_putt_avgs = get_averages()
+        return render_template('current_puttsesh.jinja2', distance=distance, today_putt_avgs=today_putt_avgs, no_putters=current_session.no_putters)
+
+    if session.get('rand_or_no', None) == 'rand-dist':
+        session['distance'] = random.randint(0, len(distances) -1)
+    else:
+        if not session.get('distance'):
+            session['distance'] = 0
+
+    distance = distances[session.get('distance')]
+
+    # distance = 0
+    putt_avgs, today_putt_avgs = get_averages()
+    return render_template('current_puttsesh.jinja2', distance=distance, today_putt_avgs=today_putt_avgs, no_putters=current_session.no_putters)
+
 
 @app.route('/puttsesh/view')
 def view_puttsesh():
@@ -96,48 +142,7 @@ def view_puttsesh_single(sesh_id):
     return render_template('view_puttsesh_single.jinja2', single_session=single_session, putts=associated_putts)
 
 
-@app.route('/putt', methods=['GET', 'POST'])
-def putt():
-    if request.method == "POST":
-        if request.form['action'] == 'End Putting Session':
-            session.pop('distance', None)
-            session.pop('rand_or_no', None)
-            return redirect(url_for('home'))
-
-        new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=request.form.get(
-            'no_putts'), distance=distances[session.get('distance')])
-        new_putt.save()
-
-        if session.get('rand_or_no', None) == 'rand-dist':
-            distance = random.choice(distances)
-        else:
-            if session.get('distance', None) != None:
-                if session.get('distance') + 1 > len(distances)-1:
-                    session['distance'] = 0
-                else:
-                    session['distance'] = session.get('distance') + 1
-                distance = session.get('distance')
-            else:
-                session['distance'] = 0
-
-            distance = distances[session.get('distance')]
-
-        putt_avgs, today_putt_avgs = get_averages()
-        return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
-
-    if session.get('rand_or_no', None) == 'rand-dist':
-        distance = random.choice(distances)
-    else:
-        session['distance'] = 0
-
-    distance = distances[session.get('distance')]
-
-    # distance = 0
-    putt_avgs, today_putt_avgs = get_averages()
-    return render_template('putt.jinja2', distance=distance, today_putt_avgs=today_putt_avgs)
-
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6789))
-    # app.run(host='0.0.0.0', port=port, debug=True)
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(host='0.0.0.0', port=port)
