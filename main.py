@@ -69,7 +69,6 @@ def new_puttsesh():
 
     return render_template('new_puttsesh.jinja2')
 
-
 @app.route('/puttsesh/view')
 def view_puttsesh():
     all_sessions = PuttSesh.select()
