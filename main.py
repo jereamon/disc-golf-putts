@@ -3,9 +3,10 @@ import datetime
 import random
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask import json
-from model import PuttSesh, Putt
+from model import PuttSesh, Putt, User
 
 app = Flask(__name__)
+login = LoginManager(app)
 # app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
@@ -168,16 +169,19 @@ def update_putt():
     no_putters = request.form['no_putters']
     new_value = request.form['new_value']
 
-    # putt_to_update = Putt.select().where(Putt.id == putt_id).get()
-    # putt_to_update.putts_made = new_value
-    # putt_to_update.save()
+    putt_to_update = Putt.select().where(Putt.id == putt_id).get()
+    putt_to_update.putts_made = new_value
+    putt_to_update.save()
 
     return json.dumps({'status': 'OK', 'putt_id': putt_id,
                        'new_value': new_value,
                        'no_putters': no_putters})
 
 
+# @app.route('/login', methods=['GET', "POST"])
+# def login():
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6789))
-    app.run(host='0.0.0.0', port=port, debug=True)
-    # app.run(host='0.0.0.0', port=port)
+    # app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
