@@ -9,7 +9,7 @@ db.create_tables([User, PuttSeshTemp])
 
 my_user = User(username='jereamon', email='jereamon@gmail.com')
 my_user.set_password('password')
-my_user.save()
+my_user.save(force_insert=True)
 
 for old_sesh in PuttSesh.select():
     temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
