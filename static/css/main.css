@@ -137,16 +137,14 @@ input[type=submit]:hover {
 
 .putt-save-container {
     transition: background-color 300ms;
+    padding: 0;
+    margin: 20px;
 }
 
 .putt-save-success {
     display: none;
     font-size: 1.5rem;
-    width: 0px;
-    transition: 300ms;
-    /* background: #009900; */
-    /* border-radius: 3px; */
-    /* padding: 7px 20px; */
+    text-align: center;
 }
 
 /*#endregion CURRENT SESSION TEMPLATE STYLES */
@@ -187,20 +185,27 @@ input[type=submit]:hover {
     box-shadow: var(--main-box-shadow);
     flex-direction: column;
     padding: 10px 0 20px;
+    max-width: 175px;
+    transition: 300ms;
     width: 40%;
 }
 
 .single-putt-info {
     padding: 0 0 20px;
+    text-align: center;
+}
+
+.delete-button, .edit-button {
+    border-radius: 2px;
+    color: var(--dark-grey-font);
+    padding: 5px 10px;
+    transition: var(--transition-time);
 }
 
 .delete-button {
     background: var(--red);
     border: var(--darker-red) outset 1px;
-    border-radius: 2px;
-    color: var(--dark-grey-font);
-    padding: 5px 10px;
-    transition: var(--transition-time);
+    margin: 20px 0 0 0;
 }
 
 .delete-button:hover {

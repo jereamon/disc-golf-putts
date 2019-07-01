@@ -56,3 +56,93 @@ deleteButtons.forEach(function (deleteButton) {
         parentEl.appendChild(delForm)
     })
 })
+
+
+function createUpdateForm(noPutters, puttId) {
+    /** Creates and populates a form with the necessary inputs and classese
+     * to enable async updating of Putt.putts_made.
+     */
+    updateForm = document.createElement('form');
+    updateButton = document.createElement('button');
+    selectInput = document.createElement('select');
+
+    selectInput.classList.add("update-select" + puttId)
+
+    updateButton.classList.add('gen-update-button');
+    updateButton.innerText = 'Update';
+    updateButton.setAttribute('type', 'button');
+
+    for (var i = 0; i < parseInt(noPutters); i++) {
+        option = document.createElement('option')
+        option.innerText = i
+        selectInput.appendChild(option)
+    };
+
+    updateForm.appendChild(selectInput);
+    updateForm.appendChild(updateButton);
+
+    updateForm.setAttribute('role', 'form');
+    updateForm.classList.add('update-form-' + puttId);
+
+    return updateForm
+}
+
+
+$(function () {
+    $('.edit-button').click(function () {
+        var puttId = $(this).parent().attr('putt-id'),
+            noPutters = $('.no_putters').text();
+
+        $(this).parent().next('div').css('display', 'none')
+        $(this).css('display', 'none')
+
+        updateForm = createUpdateForm(noPutters, puttId)
+        $(this).parent().append(updateForm);
+
+        $('.gen-update-button').click(function () {
+            // Had to save these here because inside $.ajax 'this' == the ajax
+            // function.
+            // These are the two elements that were set to display='none' above.
+            var thisDeleteDiv = $(this).parent().parent().next('div'),
+                thisEditButton = $(this).parent().prev(),
+                thisEditContainer = $(this).parent().parent(),
+                thisParentPuttContainer = $(this).parent().parent().parent();
+
+            $.ajax({
+                url: '/update_putt',
+                data: {
+                    'new_value': $('.update-select' + puttId).val(),
+                    'putt_id': puttId,
+                    'no_putters': noPutters
+                },
+                type: "POST",
+                success: function (response) {
+                    console.log(response)
+
+                    parsed_response = JSON.parse(response)
+                    $('.putts-made-' + puttId).text(parsed_response['new_value'])
+
+                    tempP = document.createElement('p')
+                    tempP.innerText = 'Putt Updated!'
+                    tempP.setAttribute('style', 'font-size: 2rem; text-align: center;')
+
+                    thisEditContainer.append(tempP)
+
+                    thisParentPuttContainer.css('background', '#009900')
+                    setTimeout(function () {
+                        tempP.remove()
+                        thisDeleteDiv.css('display', 'block')
+                        thisEditButton.css('display', 'block')
+                        thisParentPuttContainer.css('background', 'none')
+                    }, 2500)
+
+
+                    updateForm.remove()
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+})

@@ -11,6 +11,8 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 // console.log(response)
+                $('.putts-made').val(0)
+
                 parsed_response = JSON.parse(response)
                 $('.cur-dist').text(parsed_response['distance'] + "'")
                 if (parsed_response['save_code']) {
@@ -18,12 +20,15 @@ $(function () {
                     $('.putt-save-success').css('display', 'block')
                     $('.putt-save-success').css('width', '150px')
 
+                    $('.save-putt-form').css('display', 'none')
+
+
+
                     setTimeout(function () {
+                        $('.save-putt-form').css('display', 'flex')
+
                         $('.putt-save-container').css('background', 'none')
-                        $('.putt-save-success').css('width', '0px')
-                        setTimeout(function() {
-                            $('.putt-save-success').css('display', 'none')
-                        }, 150)
+                        $('.putt-save-success').css('display', 'none')
                     }, 2000)
                 }
             },

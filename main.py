@@ -143,7 +143,9 @@ def view_puttsesh_single(sesh_id):
     single_session = PuttSesh.select().where(PuttSesh.id == sesh_id).get()
     associated_putts = Putt.select().where(Putt.putt_sesh == single_session)
 
-    return render_template('view_puttsesh_single.jinja2', single_session=single_session, putts=associated_putts)
+    return render_template('view_puttsesh_single.jinja2',
+                           single_session=single_session,
+                           putts=associated_putts)
 
 
 @app.route('/save_putt', methods=['POST'])
@@ -158,6 +160,21 @@ def save_putt():
 
     return json.dumps({'status': 'OK', 'distance': distance,
                        'save_code': save_code})
+
+
+@app.route('/update_putt', methods=['POST'])
+def update_putt():
+    putt_id = request.form['putt_id']
+    no_putters = request.form['no_putters']
+    new_value = request.form['new_value']
+
+    # putt_to_update = Putt.select().where(Putt.id == putt_id).get()
+    # putt_to_update.putts_made = new_value
+    # putt_to_update.save()
+
+    return json.dumps({'status': 'OK', 'putt_id': putt_id,
+                       'new_value': new_value,
+                       'no_putters': no_putters})
 
 
 if __name__ == "__main__":
