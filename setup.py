@@ -5,20 +5,36 @@ db.connect()
 
 # db.drop_tables([PuttSesh, Putt])
 # db.create_tables([PuttSesh, Putt])
-db.create_tables([User, PuttSeshTemp])
 
-my_user = User(username='jereamon', email='jereamon@gmail.com')
-my_user.set_password('password')
-my_user.save(force_insert=True)
+##########################################
+# ↓ used to implement new puttsesh table
+##########################################
+# db.create_tables([User, PuttSeshTemp])
 
-for old_sesh in PuttSesh.select():
-    temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
-    temp_sesh.save()
+# my_user = User(username='jereamon', email='jereamon@gmail.com')
+# my_user.set_password('password')
+# my_user.save(force_insert=True)
+
+# for old_sesh in PuttSesh.select():
+#     temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
+#     temp_sesh.save()
 
 # new_puttsesh = PuttSesh(date=(datetime.now() - timedelta(hours=7)), no_putters=20)
 # new_puttsesh.save()
 # old_puttsesh = PuttSesh(date='2019-06-28', no_putters=20)
 # old_puttsesh.save()
+
+db.drop_tables([PuttSesh])
+db.create_tables([PuttSesh])
+
+my_user = User.get(User.username == 'jereamon')
+
+for temp_sesh in PuttSeshTemp.select():
+    updated_sesh = PuttSesh(user=my_user, date=temp_sesh.date, no_putters=temp_sesh.no_putters)
+    updated_sesh.save()
+#############################################
+# ↑ used to implement new puttsesh table
+#############################################
 
 # new_putt = Putt(putt_sesh=new_puttsesh, putts_made=15, distance=18)
 # new_putt.save()
