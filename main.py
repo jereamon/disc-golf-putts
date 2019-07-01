@@ -2,6 +2,7 @@ import os
 import datetime
 import random
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask import json
 from model import PuttSesh, Putt
 
 app = Flask(__name__)
@@ -142,6 +143,12 @@ def view_puttsesh_single(sesh_id):
     associated_putts = Putt.select().where(Putt.putt_sesh == single_session)
 
     return render_template('view_puttsesh_single.jinja2', single_session=single_session, putts=associated_putts)
+
+
+@app.route('/save_putt', methods=['POST'])
+def save_putt():
+    no_putts = request.form.get('no_putts')
+    return json.dumps({'status': 'OK', 'no_putts': no_putts})
 
 
 if __name__ == "__main__":

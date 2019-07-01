@@ -30,5 +30,17 @@
     <form method='POST' class='putt-page-form'>
         <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
     </form>
+
+    <form class='putt-page-form ajax-test-form' role='form'>
+        <label>
+            Number of Putts Made
+            <input id='no_putts' type='number' name='no_putts' max="{{ no_putters }}" required>
+        </label>
+        <button class='test-ajax-button' type='button'>Test Ajax </button>
+    </form>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/current_puttsesh.js') }}"></script>
+{% endblock scripts %}
