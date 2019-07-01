@@ -2,18 +2,33 @@
 
 {% block content %}
 <div class='outer-container putt-page'>
-    <div class="cur-dist-container">
-        <h4>Current Distance</h4>
-        <p>{{ distance }}</p>
+    <div class='outer-container'>
+        <div class="cur-dist-container">
+            <h4>Current Distance</h4>
+            <p class='cur-dist'>{{ distance }}'</p>
+        </div>
+        <div class=cur-dist-container>
+            <h4>No. Putters</h4>
+            <p>{{ no_putters }}</p>
+        </div>
     </div>
-    <form method='POST' class='putt-page-form'>
-        <label>
-            Number of Putts Made
-            <input type='number' name='no_putts' max="{{ no_putters }}" required>
-        </label>
+    <div class='outer-container putt-save-container'>
+        <form class='putt-page-form save-putt-form' role='form'>
+            <label>
+                Number of Putts Made
+                <select name='putts-made' class='putts-made'>
+                    {% for i in range(no_putters + 1) %}
+                        <option>{{ i }}</option>
+                    {% endfor %}
+                </select>
+                {# <input type='number' name='no_putts' max="{{ no_putters }}" required> #}
+            </label>
 
-        <input name='action' type='submit' value='Submit Putts Made'>
-    </form>
+            {# <input name='action' type='submit' value='Submit Putts Made'> #}
+            <button class='save-putt-button' type='button'>Save Putts</button>
+        </form>
+        <p class='putt-save-success'>Putts Saved</p>
+    </div>
 
     <div class="putt-avgs-outer-container">
         <h2>Today's Averages</h2>
@@ -29,14 +44,6 @@
 
     <form method='POST' class='putt-page-form'>
         <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
-    </form>
-
-    <form class='putt-page-form ajax-test-form' role='form'>
-        <label>
-            Number of Putts Made
-            <input id='no_putts' type='number' name='no_putts' max="{{ no_putters }}" required>
-        </label>
-        <button class='test-ajax-button' type='button'>Test Ajax </button>
     </form>
 </div>
 {% endblock content %}

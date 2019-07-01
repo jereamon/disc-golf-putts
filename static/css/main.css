@@ -103,7 +103,8 @@ input[type=submit]:hover {
     text-align: center;
 }
 
-.puttsesh-form input[type=submit], .putt-page-form input[type=submit] {
+.puttsesh-form input[type=submit], .putt-page-form input[type=submit],
+.save-putt-button {
     border-radius: 2px;
     font-size: 16px;
     padding: 5px 10px;
@@ -115,10 +116,12 @@ input[type=submit]:hover {
 /*#region CURRENT SESSION TEMPLATE STYLES */
 
 .cur-dist-container {
+    align-items: center;
     display: flex;
     flex-direction: column;
+    margin: 0 0 20px;
     padding: 10px 0;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .outer-container.putt-page {
@@ -130,6 +133,20 @@ input[type=submit]:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.putt-save-container {
+    transition: background-color 300ms;
+}
+
+.putt-save-success {
+    display: none;
+    font-size: 1.5rem;
+    width: 0px;
+    transition: 300ms;
+    /* background: #009900; */
+    /* border-radius: 3px; */
+    /* padding: 7px 20px; */
 }
 
 /*#endregion CURRENT SESSION TEMPLATE STYLES */

@@ -9,10 +9,13 @@ app = Flask(__name__)
 # app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
+
 distances = [18, 21, 24, 27, 30, 33]
 
 
 def get_averages():
+    """ Returns a tuple of all time and today's putting averages. """
+
     putt_avgs = {}
     for distance in distances:
         temp_list = []
@@ -20,11 +23,12 @@ def get_averages():
             no_putters = putt.putt_sesh.no_putters
             temp_list.append(putt.putts_made / no_putters)
         try:
-            putt_avgs[distance] = int(round((sum(temp_list) / len(temp_list)), 2) * 100)
+            putt_avgs[distance] = int(
+                round((sum(temp_list) / len(temp_list)), 2) * 100)
         except:
             putt_avgs[distance] = 0
     putt_avgs['18-33'] = int(round((sum(putt_avgs.values()) /
-                                len(putt_avgs.values())), 2))
+                                    len(putt_avgs.values())), 2))
 
     today_putt_avgs = {}
     for distance in distances:
@@ -41,9 +45,33 @@ def get_averages():
         except:
             today_putt_avgs[distance] = 0
     today_putt_avgs['18-33'] = int(round(sum(today_putt_avgs.values()) /
-                                     len(today_putt_avgs.values()), 2))
+                                         len(today_putt_avgs.values()), 2))
 
     return (putt_avgs, today_putt_avgs)
+
+
+def get_putt_distance(get_or_post):
+    """
+    Returns an integer to set the next putting distance depending on whether a
+    session is in progress and the selection of random or incrementing
+    distances.
+    """
+    if get_or_post == 'get':
+        if session.get('distance', None) == None:
+            if session.get('rand_or_no', None) == 'rand-dist':
+                session['distance'] = random.randint(0, len(distances) - 1)
+            else:
+                session['distance'] = 0
+    else:
+        if session.get('rand_or_no', None) == 'rand-dist':
+            session['distance'] = random.randint(0, len(distances) - 1)
+        else:
+            if session.get('distance') + 1 > len(distances)-1:
+                session['distance'] = 0
+            else:
+                session['distance'] = session.get('distance') + 1
+
+    return distances[session.get('distance')]
 
 
 @app.route('/')
@@ -84,38 +112,11 @@ def current_puttsesh(sesh_id):
             session.pop('current_sesh_id')
             return redirect(url_for('home'))
 
-        new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=request.form.get(
-            'no_putts'), distance=distances[session.get('distance')])
-        new_putt.save()
-
-        if session.get('rand_or_no', None) == 'rand-dist':
-            distance = random.choice(distances)
-        else:
-            if session.get('distance', None) != None:
-                if session.get('distance') + 1 > len(distances)-1:
-                    session['distance'] = 0
-                else:
-                    session['distance'] = session.get('distance') + 1
-                distance = session.get('distance')
-            else:
-                session['distance'] = 0
-
-            distance = distances[session.get('distance')]
-
-        putt_avgs, today_putt_avgs = get_averages()
-        return render_template('current_puttsesh.jinja2', distance=distance, today_putt_avgs=today_putt_avgs, no_putters=current_session.no_putters)
-
-    if session.get('rand_or_no', None) == 'rand-dist':
-        session['distance'] = random.randint(0, len(distances) -1)
-    else:
-        if not session.get('distance'):
-            session['distance'] = 0
-
-    distance = distances[session.get('distance')]
-
-    # distance = 0
+    distance = get_putt_distance('get')
     putt_avgs, today_putt_avgs = get_averages()
-    return render_template('current_puttsesh.jinja2', distance=distance, today_putt_avgs=today_putt_avgs, no_putters=current_session.no_putters)
+    return render_template('current_puttsesh.jinja2', distance=distance,
+                           today_putt_avgs=today_putt_avgs,
+                           no_putters=current_session.no_putters)
 
 
 @app.route('/puttsesh/view')
@@ -147,8 +148,16 @@ def view_puttsesh_single(sesh_id):
 
 @app.route('/save_putt', methods=['POST'])
 def save_putt():
-    no_putts = request.form.get('no_putts')
-    return json.dumps({'status': 'OK', 'no_putts': no_putts})
+    putts_made = request.form.get('no_putts')
+    new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=putts_made,
+                    distance=distances[session.get('distance')])
+    save_code = new_putt.save()
+    # new_putt_id = new_putt.id
+
+    distance = get_putt_distance('post')
+
+    return json.dumps({'status': 'OK', 'distance': distance,
+                       'save_code': save_code})
 
 
 if __name__ == "__main__":
