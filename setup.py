@@ -9,32 +9,38 @@ db.connect()
 ##########################################
 # ↓ used to implement new puttsesh table
 ##########################################
-# db.create_tables([User, PuttSeshTemp])
+db.drop_tables([PuttSeshTemp])
+db.create_tables([PuttSeshTemp])
 
-# my_user = User(username='jereamon', email='jereamon@gmail.com')
-# my_user.set_password('password')
-# my_user.save(force_insert=True)
+my_user = User.get(User.username == 'jereamon')
 
-# for old_sesh in PuttSesh.select():
-#     temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
-#     temp_sesh.save()
+for old_sesh in PuttSesh.select():
+    sesh_putts = Putt.select().where(Putt.putt_sesh == old_sesh)
+    temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
+    temp_sesh.save()
+
+    for putt in sesh_putts:
+        putt.putt_sesh = temp_sesh
+
+db.drop_tables([PuttSesh])
+db.create_tables([PuttSesh])
+
+for temp_sesh in PuttSeshTemp.select():
+    sesh_putts = Putt.select().where(Putt.putt_sesh == temp_sesh)
+
+    updated_sesh = PuttSesh(user=my_user, date=temp_sesh.date, no_putters=temp_sesh.no_putters)
+    updated_sesh.save()
+
+    for putt in sesh_putts:
+        putt.putt_sesh = updated_sesh
+#############################################
+# ↑ used to implement new puttsesh table
+#############################################
 
 # new_puttsesh = PuttSesh(date=(datetime.now() - timedelta(hours=7)), no_putters=20)
 # new_puttsesh.save()
 # old_puttsesh = PuttSesh(date='2019-06-28', no_putters=20)
 # old_puttsesh.save()
-
-db.drop_tables([PuttSesh])
-db.create_tables([PuttSesh])
-
-my_user = User.get(User.username == 'jereamon')
-
-for temp_sesh in PuttSeshTemp.select():
-    updated_sesh = PuttSesh(user=my_user, date=temp_sesh.date, no_putters=temp_sesh.no_putters)
-    updated_sesh.save()
-#############################################
-# ↑ used to implement new puttsesh table
-#############################################
 
 # new_putt = Putt(putt_sesh=new_puttsesh, putts_made=15, distance=18)
 # new_putt.save()
