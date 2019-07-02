@@ -206,6 +206,7 @@ def login():
             login_user = User.get(User.username == request.form['username'])
             if login_user.check_password(request.form['password']):
                 session['logged_in_user'] = login_user.username
+                return redirect(url_for('home'))
         else:
             session.pop('logged_in_user', None)
 
