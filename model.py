@@ -27,7 +27,7 @@ class PuttSesh(Model):
     """
     Fields include the date and time, as well as the number of putters used.
     """
-    user = ForeignKeyField(User, field=User.username, on_delete='CASCADE')
+    # user = ForeignKeyField(User, field=User.username, on_delete='CASCADE')
     date = DateTimeField()
     no_putters = IntegerField()
 
