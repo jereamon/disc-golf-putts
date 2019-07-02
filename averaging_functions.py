@@ -36,7 +36,6 @@ def get_avg(current_user, all_time=None):
     Retrieves all sessions for a user for the day and returns the putt averages
     for those sessions.
     """
-    pass
     today_utc_corrected = (datetime.today() -
                            timedelta(hours=7)).date()
 
@@ -56,11 +55,11 @@ def get_avg(current_user, all_time=None):
                 session_avgs[distance].append(session_avgs_return[distance])
             else:
                 session_avgs[distance] = [session_avgs_return[distance]]
-    # print(session_avgs)
+    print(session_avgs)
 
     for distance in session_avgs:
         today_putt_avgs[distance] = int(
-            round((sum(session_avgs[distance]) / len(session_avgs)), 2) * 100)
+            round((sum(session_avgs[distance]) / len(session_avgs[distance])), 2) * 100)
+    print(today_putt_avgs)
 
     return today_putt_avgs
-
