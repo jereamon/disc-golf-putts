@@ -113,9 +113,10 @@ def new_puttsesh():
 
         # This is necessary because the heroku server is set to UTC
         current_time = datetime.datetime.now() - datetime.timedelta(hours=7)
-        # current_user = session.get('logged_in_user')
         # current_time = datetime.datetime.now()
-        new_puttsesh = PuttSesh(date=current_time, no_putters=no_putters)
+        current_user = session.get('logged_in_user')
+
+        new_puttsesh = PuttSesh(user=current_user, date=current_time, no_putters=no_putters)
         new_puttsesh.save()
         session['current_sesh_id'] = new_puttsesh.id
 

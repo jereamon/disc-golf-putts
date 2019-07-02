@@ -27,17 +27,6 @@ class PuttSesh(Model):
     """
     Fields include the date and time, as well as the number of putters used.
     """
-    # user = ForeignKeyField(User, field=User.username, on_delete='CASCADE')
-    date = DateTimeField()
-    no_putters = IntegerField()
-
-    class Meta:
-        database = db
-
-class PuttSeshTemp(Model):
-    """
-    Fields include the date and time, as well as the number of putters used.
-    """
     user = ForeignKeyField(User, field=User.username, on_delete='CASCADE')
     date = DateTimeField()
     no_putters = IntegerField()
@@ -47,14 +36,6 @@ class PuttSeshTemp(Model):
 
 
 class Putt(Model):
-    putt_sesh = ForeignKeyField(PuttSesh, on_delete='CASCADE')
-    putts_made = IntegerField()
-    distance = IntegerField()
-
-    class Meta:
-        database = db
-
-class PuttTemp(Model):
     putt_sesh = ForeignKeyField(PuttSesh, on_delete='CASCADE')
     putts_made = IntegerField()
     distance = IntegerField()

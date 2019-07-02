@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from model import db, PuttSesh, Putt, User, PuttSeshTemp, PuttTemp
+from model import db, PuttSesh, Putt, User
 
 db.connect()
 
@@ -9,36 +9,11 @@ db.connect()
 ##########################################
 # ↓ used to implement new puttsesh table
 ##########################################
-# db.drop_tables([PuttSeshTemp])
-db.create_tables([PuttSeshTemp, PuttTemp])
+db.drop_tables([PuttSeshTemp])
+db.drop_tables([PuttTemp])
+db.create_tables([PuttSesh, Putt])
 
 my_user = User.get(User.username == 'jereamon')
-
-for old_sesh in PuttSesh.select():
-    sesh_putts = Putt.select().where(Putt.putt_sesh == old_sesh)
-
-    temp_sesh = PuttSeshTemp(user=my_user, date=old_sesh.date, no_putters=old_sesh.no_putters)
-    temp_sesh.save()
-
-    for putt in sesh_putts:
-        temp_putt = PuttTemp(putt_sesh=temp_sesh, putts_made=putt.putts_made, distance=putt.distance)
-        temp_putt.save()
-
-db.drop_tables([Putt])
-db.drop_tables([PuttSesh])
-# db.create_tables([PuttSesh, Putt])
-
-# for temp_sesh in PuttSeshTemp.select():
-#     sesh_putts = PuttTemp.select().where(PuttTemp.putt_sesh == temp_sesh)
-
-#     updated_sesh = PuttSesh(user=my_user, date=temp_sesh.date, no_putters=temp_sesh.no_putters)
-#     updated_sesh.save()
-
-#     for putt in sesh_putts:
-#         updated_putt = Putt(putt_sesh=updated_sesh, putts_made=putt.putts_made, distance=putt.distance)
-#         updated_putt.save()
-
-# db.drop_tables([PuttSeshTemp, PuttTemp])
 #############################################
 # ↑ used to implement new puttsesh table
 #############################################
