@@ -155,12 +155,14 @@ def save_putt():
     new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=putts_made,
                     distance=distance)
     save_code = new_putt.save()
-    # new_putt_id = new_putt.id
+
+    current_user = User.get(User.username == session.get('logged_in_user'))
+    today_avgs = af.get_avg(current_user)
 
     distance = get_putt_distance('post')
 
     return json.dumps({'status': 'OK', 'distance': distance,
-                       'save_code': save_code})
+                       'save_code': save_code, 'today_avgs': today_avgs})
 
 
 @app.route('/update_putt', methods=['POST'])
@@ -197,5 +199,5 @@ def login():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6789))
-    # app.run(host='0.0.0.0', port=port, debug=True)
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(host='0.0.0.0', port=port)

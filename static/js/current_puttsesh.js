@@ -35,6 +35,31 @@ $(function () {
                         $('.putt-save-success').css('display', 'none')
                     }, 2000)
                 }
+
+                /* ########################## */
+                /* THIS UPDATES THE AVERAGES */
+                avgsContainer = document.querySelector('.putt-avgs-inner-container')
+                while (avgsContainer.firstChild) {
+                    avgsContainer.removeChild(avgsContainer.firstChild)
+                }
+
+                var todayAvgs = parsed_response['today_avgs']
+                for (var puttAvg of Object.entries(todayAvgs)) {
+                    console.log(puttAvg)
+                    puttAvgContainer = document.createElement('div')
+                    puttAvgContainer.classList.add('putt-avg-container')
+
+                    h5 = document.createElement('h5')
+                    h5.innerText = puttAvg[0] + "'"
+
+                    p = document.createElement('p')
+                    p.innerText = puttAvg[1] + '%'
+
+                    puttAvgContainer.appendChild(h5)
+                    puttAvgContainer.appendChild(p)
+                    avgsContainer.appendChild(puttAvgContainer)
+                /* ########################## */
+                }
             },
             error: function (error) {
                 console.log(error)
