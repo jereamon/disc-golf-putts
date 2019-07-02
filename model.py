@@ -55,3 +55,12 @@ class Putt(Model):
 
     class Meta:
         database = db
+
+
+class PuttTemp(Model):
+    putt_sesh = ForeignKeyField(PuttSeshTemp, on_delete='CASCADE')
+    putts_made = IntegerField()
+    distance = IntegerField()
+
+    class Meta:
+        database = db
