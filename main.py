@@ -6,7 +6,6 @@ from flask import json
 from model import PuttSesh, Putt, User
 
 app = Flask(__name__)
-login = LoginManager(app)
 # app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
