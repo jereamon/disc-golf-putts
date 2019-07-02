@@ -3,10 +3,12 @@
 {% block content %}
 <div class='outer-container putt-page'>
     <div class='outer-container'>
-        <div class="cur-dist-container">
-            <h4>Current Distance</h4>
-            <p class='cur-dist'>{{ distance }}'</p>
-        </div>
+        {% if distance %}
+            <div class="cur-dist-container">
+                <h4>Current Distance</h4>
+                <p class='cur-dist'>{{ distance }}'</p>
+            </div>
+        {% endif %}
         <div class=cur-dist-container>
             <h4>No. Putters</h4>
             <p>{{ no_putters }}</p>
@@ -14,6 +16,17 @@
     </div>
     <div class='outer-container putt-save-container'>
         <form class='putt-page-form save-putt-form' role='form'>
+            {% if not distance %}
+                <label>
+                    Distance
+                    <select name='distance' class='distance'>
+                        {% for i in range(9, 49, 3) %}
+                            <option>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    {# <input type='number' name='no_putts' max="{{ no_putters }}" required> #}
+                </label>
+            {% endif %}
             <label>
                 Number of Putts Made
                 <select name='putts-made' class='putts-made'>
@@ -33,10 +46,10 @@
     <div class="putt-avgs-outer-container">
         <h2>Today's Averages</h2>
         <div class="putt-avgs-inner-container">
-            {% for putt_avg in today_putt_avgs %}
+            {% for putt_avg in today_avgs %}
                 <div class='putt-avg-container'>
                     <h5>{{ putt_avg }}'</h5>
-                    <p>{{ today_putt_avgs[putt_avg] }}%</p>
+                    <p>{{ today_avgs[putt_avg] }}%</p>
                 </div>
             {% endfor %}
         </div>

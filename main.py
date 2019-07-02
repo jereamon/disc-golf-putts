@@ -2,6 +2,7 @@ import os
 import datetime
 import random
 from functools import wraps
+import averaging_functions as af
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask import json
 from model import PuttSesh, Putt, User
@@ -11,50 +12,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
 
-distances = [18, 21, 24, 27, 30, 33]
+distances = [18, 21, 24, 27, 30, 33]\
 
-
-def get_averages():
-    """ Returns a tuple of all time and today's putting averages. """
-
-    putt_avgs = {}
-    # current_user = User.get(User.username == session.get('logged_in_user'))
-    # all_sessions = PuttSesh.select().where(PuttSesh.user == current_user)
-
-    # for record in PuttSesh.select().where(PuttSesh.user == current_user):
-    #     print(record)
-
-    for distance in distances:
-        temp_list = []
-        for putt in Putt.select().where(Putt.distance == distance):
-            no_putters = putt.putt_sesh.no_putters
-            temp_list.append(putt.putts_made / no_putters)
-        try:
-            putt_avgs[distance] = int(
-                round((sum(temp_list) / len(temp_list)), 2) * 100)
-        except:
-            putt_avgs[distance] = 0
-    putt_avgs['18-33'] = int(round((sum(putt_avgs.values()) /
-                                    len(putt_avgs.values())), 2))
-
-    today_putt_avgs = {}
-    for distance in distances:
-        temp_list = []
-        for putt in Putt.select().where(Putt.distance == distance):
-            # The first if is for local dev 2nd is for heroku server utc time.
-            # if putt.putt_sesh.date.date() == datetime.datetime.today().date():
-            if putt.putt_sesh.date.date() == (datetime.datetime.today() - datetime.timedelta(hours=7)).date():
-                no_putters = putt.putt_sesh.no_putters
-                temp_list.append(round((putt.putts_made / no_putters), 2))
-        try:
-            today_putt_avgs[distance] = int(round(
-                (sum(temp_list) / len(temp_list)), 2) * 100)
-        except:
-            today_putt_avgs[distance] = 0
-    today_putt_avgs['18-33'] = int(round(sum(today_putt_avgs.values()) /
-                                         len(today_putt_avgs.values()), 2))
-
-    return (putt_avgs, today_putt_avgs)
 
 
 def get_putt_distance(get_or_post):
@@ -63,22 +22,25 @@ def get_putt_distance(get_or_post):
     session is in progress and the selection of random or incrementing
     distances.
     """
-    if get_or_post == 'get':
-        if session.get('distance', None) == None:
-            if session.get('rand_or_no', None) == 'rand-dist':
+    if session.get('session_dist_select', None) != None:
+        if get_or_post == 'get':
+            if session.get('distance', None) == None:
+                if session.get('session_dist_select', None) == 'rand-dist':
+                    session['distance'] = random.randint(0, len(distances) - 1)
+                else:
+                    session['distance'] = 0
+        else:
+            if session.get('session_dist_select', None) == 'rand-dist':
                 session['distance'] = random.randint(0, len(distances) - 1)
             else:
-                session['distance'] = 0
-    else:
-        if session.get('rand_or_no', None) == 'rand-dist':
-            session['distance'] = random.randint(0, len(distances) - 1)
-        else:
-            if session.get('distance') + 1 > len(distances)-1:
-                session['distance'] = 0
-            else:
-                session['distance'] = session.get('distance') + 1
+                if session.get('distance') + 1 > len(distances)-1:
+                    session['distance'] = 0
+                else:
+                    session['distance'] = session.get('distance') + 1
 
-    return distances[session.get('distance')]
+        return distances[session.get('distance')]
+    else:
+        return None
 
 
 def login_required(f):
@@ -97,10 +59,12 @@ def home():
     # if not login_check():
     #     return redirect(url_for('login'))
 
-    putt_avgs, today_putt_avgs = get_averages()
+    current_user = User.get(User.username == session.get('logged_in_user'))
+    all_time_avgs = af.get_avg(current_user, 'ALL_TIME')
+    today_avgs = af.get_avg(current_user)
 
-    return render_template('home.jinja2', putt_avgs=putt_avgs,
-                           today_putt_avgs=today_putt_avgs)
+    return render_template('home.jinja2', all_time_avgs=all_time_avgs,
+                           today_avgs=today_avgs)
 
 
 @app.route('/puttsesh/new', methods=['GET', 'POST'])
@@ -109,14 +73,17 @@ def new_puttsesh():
     if request.method == "POST":
         no_putters = request.form['no-putters']
         # specifies whether to increment putting distance or have random distances
-        session['rand_or_no'] = request.form['rand-or-no']
+        if (request.form['session_dist_select'] == 'rand-dist') or \
+                (request.form['session_dist_select'] == 'inc-dist'):
+            session['session_dist_select'] = request.form['session_dist_select']
 
         # This is necessary because the heroku server is set to UTC
         current_time = datetime.datetime.now() - datetime.timedelta(hours=7)
         # current_time = datetime.datetime.now()
         current_user = session.get('logged_in_user')
 
-        new_puttsesh = PuttSesh(user=current_user, date=current_time, no_putters=no_putters)
+        new_puttsesh = PuttSesh(
+            user=current_user, date=current_time, no_putters=no_putters)
         new_puttsesh.save()
         session['current_sesh_id'] = new_puttsesh.id
 
@@ -133,14 +100,16 @@ def current_puttsesh(sesh_id):
     if request.method == "POST":
         if request.form['action'] == 'End Putting Session':
             session.pop('distance', None)
-            session.pop('rand_or_no', None)
+            session.pop('session_dist_select', None)
             session.pop('current_sesh_id')
             return redirect(url_for('home'))
 
     distance = get_putt_distance('get')
-    putt_avgs, today_putt_avgs = get_averages()
+
+    current_user = User.get(User.username == session.get('logged_in_user'))
+    today_avgs = af.get_avg(current_user)
     return render_template('current_puttsesh.jinja2', distance=distance,
-                           today_putt_avgs=today_putt_avgs,
+                           today_avgs=today_avgs,
                            no_putters=current_session.no_putters)
 
 
@@ -179,8 +148,12 @@ def view_puttsesh_single(sesh_id):
 @login_required
 def save_putt():
     putts_made = request.form.get('no_putts')
+    if request.form.get('distance'):
+        distance = request.form.get('distance')
+    else:
+        distance = distances[session.get('distance')]
     new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=putts_made,
-                    distance=distances[session.get('distance')])
+                    distance=distance)
     save_code = new_putt.save()
     # new_putt_id = new_putt.id
 
