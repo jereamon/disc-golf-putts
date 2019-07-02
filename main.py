@@ -18,6 +18,12 @@ def get_averages():
     """ Returns a tuple of all time and today's putting averages. """
 
     putt_avgs = {}
+    current_user = User.get(User.username == session.get('logged_in_user'))
+    # all_sessions = PuttSesh.select().where(PuttSesh.user == current_user)
+
+    for record in PuttSesh.select().where(PuttSesh.user == current_user):
+        print(record)
+
     for distance in distances:
         temp_list = []
         for putt in Putt.select().where(Putt.distance == distance):
@@ -107,8 +113,9 @@ def new_puttsesh():
 
         # This is necessary because the heroku server is set to UTC
         current_time = datetime.datetime.now() - datetime.timedelta(hours=7)
+        current_user = session.get('logged_in_user')
         # current_time = datetime.datetime.now()
-        new_puttsesh = PuttSesh(date=current_time, no_putters=no_putters)
+        new_puttsesh = PuttSesh(user=current_user, date=current_time, no_putters=no_putters)
         new_puttsesh.save()
         session['current_sesh_id'] = new_puttsesh.id
 

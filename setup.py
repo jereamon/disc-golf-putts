@@ -10,7 +10,7 @@ db.connect()
 # ↓ used to implement new puttsesh table
 ##########################################
 # db.drop_tables([PuttSeshTemp])
-# db.create_tables([PuttSeshTemp, PuttTemp])
+db.create_tables([PuttSeshTemp, PuttTemp])
 
 # my_user = User.get(User.username == 'jereamon')
 
