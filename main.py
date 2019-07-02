@@ -18,11 +18,11 @@ def get_averages():
     """ Returns a tuple of all time and today's putting averages. """
 
     putt_avgs = {}
-    current_user = User.get(User.username == session.get('logged_in_user'))
+    # current_user = User.get(User.username == session.get('logged_in_user'))
     # all_sessions = PuttSesh.select().where(PuttSesh.user == current_user)
 
-    for record in PuttSesh.select().where(PuttSesh.user == current_user):
-        print(record)
+    # for record in PuttSesh.select().where(PuttSesh.user == current_user):
+    #     print(record)
 
     for distance in distances:
         temp_list = []
