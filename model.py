@@ -35,30 +35,8 @@ class PuttSesh(Model):
         database = db
 
 
-class PuttSeshTemp(Model):
-    """
-    Will include the foreignKeyField I want to add and will temporarily
-    store the existing data.
-    """
-    user = ForeignKeyField(User, on_delete='CASCADE')
-    date = DateTimeField()
-    no_putters = IntegerField()
-
-    class Meta:
-        database = db
-
-
 class Putt(Model):
     putt_sesh = ForeignKeyField(PuttSesh, on_delete='CASCADE')
-    putts_made = IntegerField()
-    distance = IntegerField()
-
-    class Meta:
-        database = db
-
-
-class PuttTemp(Model):
-    putt_sesh = ForeignKeyField(PuttSeshTemp, on_delete='CASCADE')
     putts_made = IntegerField()
     distance = IntegerField()
 

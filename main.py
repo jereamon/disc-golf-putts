@@ -1,6 +1,7 @@
 import os
 import datetime
 import random
+from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask import json
 from model import PuttSesh, Putt, User
@@ -74,8 +75,22 @@ def get_putt_distance(get_or_post):
     return distances[session.get('distance')]
 
 
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in_user' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('login'))
+    return wrap
+
+
 @app.route('/')
+@login_required
 def home():
+    # if not login_check():
+    #     return redirect(url_for('login'))
+
     putt_avgs, today_putt_avgs = get_averages()
 
     return render_template('home.jinja2', putt_avgs=putt_avgs,
@@ -83,6 +98,7 @@ def home():
 
 
 @app.route('/puttsesh/new', methods=['GET', 'POST'])
+@login_required
 def new_puttsesh():
     if request.method == "POST":
         no_putters = request.form['no-putters']
@@ -102,6 +118,7 @@ def new_puttsesh():
 
 
 @app.route('/puttsesh/current/<sesh_id>', methods=['GET', 'POST'])
+@login_required
 def current_puttsesh(sesh_id):
     current_session = PuttSesh.select().where(PuttSesh.id == sesh_id).get()
 
@@ -120,12 +137,14 @@ def current_puttsesh(sesh_id):
 
 
 @app.route('/puttsesh/view')
+@login_required
 def view_puttsesh():
     all_sessions = PuttSesh.select()
     return render_template('view_puttsesh.jinja2', all_sessions=all_sessions)
 
 
 @app.route('/puttsesh/view/<sesh_id>', methods=['GET', 'POST'])
+@login_required
 def view_puttsesh_single(sesh_id):
     if request.method == "POST":
         if request.form.get('puttsesh-id'):
@@ -149,6 +168,7 @@ def view_puttsesh_single(sesh_id):
 
 
 @app.route('/save_putt', methods=['POST'])
+@login_required
 def save_putt():
     putts_made = request.form.get('no_putts')
     new_putt = Putt(putt_sesh=session['current_sesh_id'], putts_made=putts_made,
@@ -163,6 +183,7 @@ def save_putt():
 
 
 @app.route('/update_putt', methods=['POST'])
+@login_required
 def update_putt():
     putt_id = request.form['putt_id']
     no_putters = request.form['no_putters']
@@ -177,10 +198,22 @@ def update_putt():
                        'no_putters': no_putters})
 
 
-# @app.route('/login', methods=['GET', "POST"])
-# def login():
+@app.route('/login', methods=['GET', "POST"])
+def login():
+    if request.method == 'POST':
+        # session.pop('logged_in_user', None)
+        if request.form['action'] == 'Log In':
+            login_user = User.get(User.username == request.form['username'])
+            if login_user.check_password(request.form['password']):
+                session['logged_in_user'] = login_user.username
+        else:
+            session.pop('logged_in_user', None)
+
+    login_stat = session.get('logged_in_user', None)
+    return render_template('login.jinja2', login_stat=login_stat)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6789))
-    # app.run(host='0.0.0.0', port=port, debug=True)
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(host='0.0.0.0', port=port)

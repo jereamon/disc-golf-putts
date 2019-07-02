@@ -38,7 +38,7 @@ db.connect()
 #         updated_putt = Putt(putt_sesh=updated_sesh, putts_made=putt.putts_made, distance=putt.distance)
 #         updated_putt.save()
 
-db.drop_tables([PuttSeshTemp, PuttTemp])
+# db.drop_tables([PuttSeshTemp, PuttTemp])
 #############################################
 # ↑ used to implement new puttsesh table
 #############################################

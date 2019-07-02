@@ -1,0 +1,17 @@
+{% extends "base.jinja2" %}
+
+{% block content %}
+<form method='POST'>
+{% if login_stat == None %}
+    <label>Username
+        <input name='username' type='text'>
+    </label>
+    <label>Password
+        <input name='password' type='password'>
+    </label>
+    <input type='submit' name='action' value='Log In'>
+{% else %}
+    <input type='submit' name='action' value='Log Out'>
+{% endif %}
+</form>
+{% endblock content %}
