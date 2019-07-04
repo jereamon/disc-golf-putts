@@ -4,7 +4,7 @@
 <div class='outer-container puttsesh-container'>
 {% for session in all_sessions %}
 <a class="puttsesh-link" href="{{ url_for('view_puttsesh_single', sesh_id=session.id) }}">
-    <h3>Id:{{ session.id }} Date:{{ session.date.strftime('%Y-%m-%d %I:%M') }}</h3>
+    <h3>{{ session.date.strftime('%m/%d %I:%M%p') }}</h3>
     <p>No. Putters:{{ session.no_putters }}</p>
 </a>
 {% endfor %}

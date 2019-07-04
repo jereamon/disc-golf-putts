@@ -4,7 +4,7 @@
 <div class='outer-container'>
     <div class='view-single-header-container'>
         <div>
-            <h3>Id:{{ single_session.id }} Date:{{ single_session.date.strftime('%Y-%m-%d %I:%M')}}</h3>
+            <h3>{{ single_session.date.strftime('%m/%d %I:%M%p') }}</h3>
             <p>No. Putters:
                 <span class='no_putters'>{{ single_session.no_putters }}</span>
             </p>
@@ -19,9 +19,10 @@
         {% for putt in putts %}
         <div class='single-putt-container'>
             <div class='single-putt-info'>
-                <p>Made:<span class='putts-made-{{putt.id}}'>{{ putt.putts_made }}</span>/{{ single_session.no_putters}}</p>
-                <p>{{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%</p>
-                <p>Distance:{{ putt.distance }}'</p>
+                <p>Distance: {{ putt.distance }}'</p>
+                <p><span class='putts-made-{{putt.id}}'>{{ putt.putts_made }}</span>/{{ single_session.no_putters}}
+                    {{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%
+                </p>
             </div>
             <div class='edit-delete-container'>
                 <div class='putt-edit-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">

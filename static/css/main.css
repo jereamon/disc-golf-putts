@@ -12,6 +12,10 @@
     --nude: #E2D9CA;
     --blue-gray: #4A94A8;
     --dark-blue: #2B293C;
+
+    --blue-thick-border: solid 2px var(--blue-gray);
+    --blue-thin-border: solid 1px var(--blue-gray);
+    --purple-thick-border: solid 2px var(--purple);
 }
 
 * {
@@ -78,15 +82,18 @@ nav a:hover {
 }
 
 .putt-avgs-inner-container {
-    background: var(--blue-gray);
     width: 100%;
 }
 
 .putt-avg-outer-container {
     align-items: center;
+    background: var(--purple);
+    border-bottom: solid 2px var(--blue-gray);
+    border-top: solid 1px var(--blue-gray);
     display: flex;
     flex-direction: column;
-    border-bottom: solid 1px var(--dark-grey-font);
+    margin: 10px 0;
+    padding: 20px 0;
     width: 100%;
 }
 
@@ -94,7 +101,7 @@ nav a:hover {
     display: flex;
     justify-content: space-around;
     max-width: 300px;
-    padding: 15px 0;
+    /* padding: 15px 0; */
     text-align: center;
     width: 50%;
 }
@@ -179,7 +186,9 @@ input[type=submit]:hover {
 
 .puttsesh-link {
     background: var(--purple);
-    border-bottom: solid 1px var(--dark-grey-font);
+    /* border-bottom: solid 1px var(--dark-grey-font); */
+    border-bottom: var(--blue-thick-border);
+    margin: 10px 0;
     padding: 20px 0;
     text-decoration: none;
     transition: var(--transition-time);
@@ -188,6 +197,7 @@ input[type=submit]:hover {
 }
 
 .puttsesh-link:hover {
+    border-bottom: var(--purple-thick-border);
     color: var(--white-font);
     background: var(--blue-gray);
 }
@@ -208,28 +218,26 @@ input[type=submit]:hover {
     width: 100%
 }
 
-.single-putt-container:nth-child(odd) {
-    background: var(--blue-gray);
-}
-
-.single-putt-container:nth-child(even) {
-    background: var(--purple);
-}
-
 .single-putt-container {
     align-items: center;
-    /* background: var(--blue-gray); */
-    border-bottom: solid 1px var(--dark-grey-font);
+    background: var(--purple);
+    border-bottom: var(--blue-thick-border);
+    border-top: var(--blue-thin-border);
     display: flex;
     justify-content: space-around;
+    margin: 10px 0;
     padding: 20px 0;
     transition: 300ms;
     width: 100%;
 }
 
 .single-putt-info {
-    /* padding: 0 0 20px; */
     text-align: center;
+}
+
+.single-putt-info p {
+    margin: 5px 0;
+    padding: 5px 0;
 }
 
 .delete-button, .edit-button, .delete-session-button {
@@ -241,49 +249,31 @@ input[type=submit]:hover {
 
 .delete-session-button {
     background: var(--nude);
-    border: 2px solid var(--dark-blue);
+    border: var(--blue-thick-border);
 }
 
 .edit-button {
     background: var(--nude);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* overflow: hidden; */
 }
 
 .delete-button {
     background: var(--dark-blue);
     border: var(--purple) outset 1px;
     color: var(--white-font);
-    margin: 20px 0 0 0;
+    /* writing-mode: vertical-rl;
+    text-orientation: upright; */
+    /* margin: 20px 0 0 0; */
 }
 
 .delete-button:hover, .edit-button:hover, .delete-session-button:hover {
     cursor: pointer;
 }
 
-.single-putt-container:nth-child(odd) .edit-button:hover {
-    background: var(--purple);
-    border: solid 2px var(--dark-blue);
-    color: var(--white-font);
+.gen-update-button, select, option, input {
+    color: var(--dark-grey-font);
 }
-
-.single-putt-container:nth-child(odd) .delete-button:hover {
-    background: var(--purple);
-}
-
-.single-putt-container:nth-child(even) .edit-button:hover,
-.delete-session-button:hover {
-    background: var(--blue-gray);
-    border: solid 2px var(--dark-blue);
-    color: var(--white-font);
-}
-
-.single-putt-container:nth-child(even) .delete-button:hover {
-    background: var(--blue-gray);
-}
-
-/* .delete-button:hover {
-    background: var(--purple);
-    border-color: #770000;
-    color: var(--dark-blue);
-} */
 
 /*#endregion VIEW SINGLE SESSION */
