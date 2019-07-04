@@ -208,7 +208,7 @@ input[type=submit]:hover {
     width: 100%
 }
 
-.single-putts-container:nth-child(odd) {
+.single-putt-container:nth-child(odd) {
     background: var(--blue-gray);
 }
 
@@ -218,7 +218,7 @@ input[type=submit]:hover {
 
 .single-putt-container {
     align-items: center;
-    background: var(--blue-gray);
+    /* background: var(--blue-gray); */
     border-bottom: solid 1px var(--dark-grey-font);
     display: flex;
     justify-content: space-around;
@@ -232,11 +232,20 @@ input[type=submit]:hover {
     text-align: center;
 }
 
-.delete-button, .edit-button {
+.delete-button, .edit-button, .delete-session-button {
     border-radius: 2px;
     color: var(--dark-grey-font);
     padding: 5px 10px;
     transition: var(--transition-time);
+}
+
+.delete-session-button {
+    background: var(--nude);
+    border: 2px solid var(--dark-blue);
+}
+
+.edit-button {
+    background: var(--nude);
 }
 
 .delete-button {
@@ -246,11 +255,35 @@ input[type=submit]:hover {
     margin: 20px 0 0 0;
 }
 
-.delete-button:hover {
-    background: var(--purple);
-    border-color: #770000;
-    /* color: var(--dark-blue); */
+.delete-button:hover, .edit-button:hover, .delete-session-button:hover {
     cursor: pointer;
 }
+
+.single-putt-container:nth-child(odd) .edit-button:hover {
+    background: var(--purple);
+    border: solid 2px var(--dark-blue);
+    color: var(--white-font);
+}
+
+.single-putt-container:nth-child(odd) .delete-button:hover {
+    background: var(--purple);
+}
+
+.single-putt-container:nth-child(even) .edit-button:hover,
+.delete-session-button:hover {
+    background: var(--blue-gray);
+    border: solid 2px var(--dark-blue);
+    color: var(--white-font);
+}
+
+.single-putt-container:nth-child(even) .delete-button:hover {
+    background: var(--blue-gray);
+}
+
+/* .delete-button:hover {
+    background: var(--purple);
+    border-color: #770000;
+    color: var(--dark-blue);
+} */
 
 /*#endregion VIEW SINGLE SESSION */
