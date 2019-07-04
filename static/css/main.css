@@ -3,44 +3,60 @@
     --white-font: #efefef;
     --dark-grey-font: #333;
     --grey-font: #666;
-    --light-grey-font: #bbb;
+    --light-grey-font: #ddd;
     --red: #cc0000;
     --darker-red: #bb0000;
     --transition-time: 300ms;
+
+    --purple: #6A4973;
+    --nude: #E2D9CA;
+    --blue-gray: #4A94A8;
+    --dark-blue: #2B293C;
 }
 
 * {
+    /* background: var(--dark-grey-font); */
     box-sizing: border-box;
+    color: var(--white-font);
+    font-family: 'Montserrat';
+    font-weight: normal;
     /* font-size: 33px; */
     margin: 0;
     padding: 0;
 }
 
+body {
+    background: var(--dark-grey-font);
+}
+
 /*#region BASE TEMPLATE STYLES */
 
 nav {
-    background: var(--white-font);
+    /* background: var(--dark-purple); */
+    background: var(--dark-grey-font);
     display: flex;
     justify-content: flex-end;
+    z-index: 1;
 }
 
 nav a {
-    color: var(--dark-grey-font);
+    color: var(--white-font);
     padding: 10px 15px;
     text-decoration: none;
     transition: var(--transition-time);
 }
 
 nav a:hover {
-    background: var(--dark-grey-font);
-    color: var(--white-font);
+    background: var(--blue-gray);
+    color: var(--light-grey-font);
 }
 
 .outer-container {
+    align-items: center;
     display: flex;
-    justify-content: space-around;
-    padding: 25px 0 0 0;
-    width: 100%;
+    flex-direction: column;
+    /* margin: 0 auto;
+    width: 80vw; */
 }
 
 /*#endregion BASE TEMPLATE STYLES */
@@ -51,27 +67,36 @@ nav a:hover {
     align-items: center;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
+    /* width: 100vw; */
 }
 
 .putt-avgs-outer-container h2 {
-    padding: 0 0 10px 0;
+    background: var(--purple);
+    padding: 25px 0;
     text-align: center;
+    width: 100vw;
 }
 
 .putt-avgs-inner-container {
+    background: var(--blue-gray);
+    width: 100%;
+}
+
+.putt-avg-outer-container {
+    align-items: center;
     display: flex;
-    /* flex-direction: column; */
-    flex-wrap: wrap;
-    justify-content: center;
-    /* align-items: center; */
+    flex-direction: column;
+    border-bottom: solid 1px var(--dark-grey-font);
+    width: 100%;
 }
 
 .putt-avg-container {
-    box-shadow: 1px 1px 3px 0px rgba(51, 51, 51, 0.15);
-    padding: 5px 0;
+    display: flex;
+    justify-content: space-around;
+    max-width: 300px;
+    padding: 15px 0;
     text-align: center;
-    width: 36%;
+    width: 50%;
 }
 
 input[type=submit]:hover {
@@ -106,6 +131,7 @@ input[type=submit]:hover {
 .puttsesh-form input[type=submit], .putt-page-form input[type=submit],
 .save-putt-button {
     border-radius: 2px;
+    color: var(--dark-grey-font);
     font-size: 16px;
     padding: 5px 10px;
     margin: 10px 0;
@@ -115,83 +141,94 @@ input[type=submit]:hover {
 
 /*#region CURRENT SESSION TEMPLATE STYLES */
 
-.cur-dist-container {
+/* .cur-dist-container {
     align-items: center;
     display: flex;
     flex-direction: column;
     margin: 0 0 20px;
     padding: 10px 0;
-    /* text-align: center; */
-}
+    text-align: center;
+} */
 
-.outer-container.putt-page {
+/* .outer-container.putt-page {
     flex-direction: column;
     align-items: center;
-}
+} */
 
-.putt-page-form {
+/* .putt-page-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
-.putt-save-container {
+/* .putt-save-container {
     transition: background-color 300ms;
     padding: 0;
     margin: 20px;
-}
+} */
 
-.putt-save-success {
+/* .putt-save-success {
     display: none;
     font-size: 1.5rem;
     text-align: center;
-}
+} */
 
 /*#endregion CURRENT SESSION TEMPLATE STYLES */
 
 /*#region VIEW SESSIONS */
 
-.puttsesh-container {
-    align-items: center;
-    flex-direction: column;
-}
-
 .puttsesh-link {
-    border-radius: 2px;
-    box-shadow: var(--main-box-shadow);
-    color: var(--dark-grey-font);
-    margin: 10px 0;
-    padding: 10px;
+    background: var(--purple);
+    border-bottom: solid 1px var(--dark-grey-font);
+    padding: 20px 0;
     text-decoration: none;
     transition: var(--transition-time);
+    text-align: center;
+    width: 100%;
 }
 
 .puttsesh-link:hover {
     color: var(--white-font);
-    background: var(--grey-font);
+    background: var(--blue-gray);
 }
 
 /*#endregion VIEW SESSSIONS */
 
 /*#region VIEW SINGLE SESSION */
 
-.single-putts-outer-container {
+.view-single-header-container {
+    background: var(--purple);
+    display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    padding: 25px 0;
+    width: 100%;
+}
+
+.putts-container {
+    width: 100%
+}
+
+.single-putts-container:nth-child(odd) {
+    background: var(--blue-gray);
+}
+
+.single-putt-container:nth-child(even) {
+    background: var(--purple);
 }
 
 .single-putt-container {
     align-items: center;
-    box-shadow: var(--main-box-shadow);
-    flex-direction: column;
-    padding: 10px 0 20px;
-    max-width: 175px;
+    background: var(--blue-gray);
+    border-bottom: solid 1px var(--dark-grey-font);
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
     transition: 300ms;
-    width: 40%;
+    width: 100%;
 }
 
 .single-putt-info {
-    padding: 0 0 20px;
+    /* padding: 0 0 20px; */
     text-align: center;
 }
 
@@ -203,15 +240,16 @@ input[type=submit]:hover {
 }
 
 .delete-button {
-    background: var(--red);
-    border: var(--darker-red) outset 1px;
+    background: var(--dark-blue);
+    border: var(--purple) outset 1px;
+    color: var(--white-font);
     margin: 20px 0 0 0;
 }
 
 .delete-button:hover {
-    background: #990000;
+    background: var(--purple);
     border-color: #770000;
-    color: var(--white-font);
+    /* color: var(--dark-blue); */
     cursor: pointer;
 }
 
