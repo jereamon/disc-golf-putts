@@ -3,30 +3,34 @@
 {% block content %}
 <div class="outer-container">
     <div class="putt-avgs-outer-container">
-        <h2>Today's Averages</h2>
-        <div class="putt-avgs-inner-container">
-                {% for putt_avg in today_avgs %}
-                    <div class='putt-avg-outer-container'>
-                        <div class='putt-avg-container'>
-                            <h5>{{ putt_avg }}'</h5>
-                            <p>{{ today_avgs[putt_avg] }}%</p>
+        {% if today_avgs %}
+            <h2>Today's Averages</h2>
+            <div class="putt-avgs-inner-container">
+                    {% for putt_avg in today_avgs %}
+                        <div class='putt-avg-outer-container'>
+                            <div class='putt-avg-container'>
+                                <h5>{{ putt_avg }}'</h5>
+                                <p>{{ today_avgs[putt_avg] }}%</p>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-        </div>
+                    {% endfor %}
+            </div>
+        {% endif %}
     </div>
     <div class="putt-avgs-outer-container">
-        <h2>All Time Averages</h2>
-        <div class="putt-avgs-inner-container">
-                {% for putt_avg in all_time_avgs %}
-                    <div class='putt-avg-outer-container'>
-                        <div class='putt-avg-container'>
-                            <h5>{{ putt_avg }}'</h5>
-                            <p>{{ all_time_avgs[putt_avg] }}%</p>
+        {% if all_time_avgs %}
+            <h2>All Time Averages</h2>
+            <div class="putt-avgs-inner-container">
+                    {% for putt_avg in all_time_avgs %}
+                        <div class='putt-avg-outer-container'>
+                            <div class='putt-avg-container'>
+                                <h5>{{ putt_avg }}'</h5>
+                                <p>{{ all_time_avgs[putt_avg] }}%</p>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-        </div>
+                    {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
 
