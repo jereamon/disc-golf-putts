@@ -1,17 +1,22 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-<form method='POST'>
-{% if login_stat == None %}
-    <label>Username
-        <input name='username' type='text'>
-    </label>
-    <label>Password
-        <input name='password' type='password'>
-    </label>
-    <input type='submit' name='action' value='Log In'>
-{% else %}
-    <input type='submit' name='action' value='Log Out'>
+{% if session.get('error') %}
+    <h3 class='login-error'>{{ session.get('error') }}</h3>
 {% endif %}
-</form>
+<div class="login-form-container">
+    <form class='login-form' method='POST'>
+    {% if login_stat == None %}
+        {# <label>Username #}
+            <input name='username' type='text' placeholder='Username'>
+        {# </label> #}
+        {# <label>Password #}
+            <input name='password' type='password' placeholder='Password'>
+        {# </label> #}
+        <input type='submit' name='action' value='Log In'>
+    {% else %}
+        <input type='submit' name='action' value='Log Out'>
+    {% endif %}
+    </form>
+</div>
 {% endblock content %}

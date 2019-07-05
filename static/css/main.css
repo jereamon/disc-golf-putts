@@ -19,12 +19,10 @@
 }
 
 * {
-    /* background: var(--dark-grey-font); */
     box-sizing: border-box;
     color: var(--white-font);
     font-family: 'Montserrat';
     font-weight: normal;
-    /* font-size: 33px; */
     margin: 0;
     padding: 0;
 }
@@ -33,11 +31,44 @@ body {
     background: var(--dark-grey-font);
 }
 
+a:hover {
+    cursor: pointer;
+}
+
+/*#region LOGIN TEMPLATE STYLES */
+
+.login-error {
+    text-align: center;
+}
+
+.login-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form > * {
+    margin: 10px 0;
+}
+
+.login-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+input[type='submit'][value='Log In'], input[type='submit'][value='Log Out'] {
+    max-width: 100px;
+}
+
+/*#endregion LOGIN TEMPLATE STYLES */
+
 /*#region BASE TEMPLATE STYLES */
 
 nav {
     /* background: var(--dark-purple); */
     background: var(--dark-grey-font);
+    border-bottom: var(--blue-thick-border);
     display: flex;
     justify-content: flex-end;
     z-index: 1;
@@ -59,8 +90,7 @@ nav a:hover {
     align-items: center;
     display: flex;
     flex-direction: column;
-    /* margin: 0 auto;
-    width: 80vw; */
+    margin: 50px 0 0;
 }
 
 /*#endregion BASE TEMPLATE STYLES */
@@ -240,6 +270,10 @@ input[type=submit]:hover {
     padding: 5px 0;
 }
 
+.putt-edit-container, .putt-delete-container {
+    margin: 15px 0;
+}
+
 .delete-button, .edit-button, .delete-session-button {
     border-radius: 2px;
     color: var(--dark-grey-font);
@@ -254,18 +288,12 @@ input[type=submit]:hover {
 
 .edit-button {
     background: var(--nude);
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    /* overflow: hidden; */
 }
 
 .delete-button {
     background: var(--dark-blue);
     border: var(--purple) outset 1px;
     color: var(--white-font);
-    /* writing-mode: vertical-rl;
-    text-orientation: upright; */
-    /* margin: 20px 0 0 0; */
 }
 
 .delete-button:hover, .edit-button:hover, .delete-session-button:hover {

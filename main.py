@@ -6,6 +6,7 @@ import averaging_functions as af
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask import json
 from model import PuttSesh, Putt, User
+from peewee import DoesNotExist
 
 app = Flask(__name__)
 # app.secret_key = b'\x9d\xb1u\x08%(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
@@ -182,11 +183,15 @@ def update_putt():
 
 
 @app.route('/login', methods=['GET', "POST"])
-def login():
+def login(error=None):
     if request.method == 'POST':
         # session.pop('logged_in_user', None)
         if request.form['action'] == 'Log In':
-            login_user = User.get(User.username == request.form['username'])
+            try:
+                login_user = User.get(User.username == request.form['username'].lower())
+            except DoesNotExist:
+                session['error'] = 'Username or password incorrect'
+                return redirect(url_for('login'))
             if login_user.check_password(request.form['password']):
                 session['logged_in_user'] = login_user.username
                 return redirect(url_for('home'))
