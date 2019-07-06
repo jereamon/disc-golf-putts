@@ -16,23 +16,24 @@
         </div>
     </div>
     <div class='putts-container'>
-        {% for putt in putts %}
-        <div class='single-putt-container'>
-            <div class='single-putt-info'>
-                <p>Distance: {{ putt.distance }}'</p>
-                <p><span class='putts-made-{{putt.id}}'>{{ putt.putts_made }}</span>/{{ single_session.no_putters}}
-                    {{ ((putt.putts_made / single_session.no_putters) * 100) | int }}%
-                </p>
-            </div>
-            <div class='edit-delete-container'>
-                <div class='putt-edit-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">
-                    <button class='edit-button'>Edit Putt</button>
+        {% for num in range((putts|length) - 1, -1, -1) %}
+            <div class='single-putt-container'>
+                <div class='single-putt-info'>
+                    <p>{{ num + 1 }}
+                    <p>Distance: {{ putts[num].distance }}'</p>
+                    <p><span class='putts-made-{{putts.id}}'>{{ putts[num].putts_made }}</span>/{{ single_session.no_putters}}
+                        {{ ((putts[num].putts_made / single_session.no_putters) * 100) | int }}%
+                    {# </p> #}
                 </div>
-                <div class='putt-delete-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putt.id }}">
-                    <button class="delete-button">Delete Putt</button>
+                <div class='edit-delete-container'>
+                    <div class='putt-edit-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putts[num].id }}">
+                        <button class='edit-button'>Edit Putt</button>
+                    </div>
+                    <div class='putt-delete-container' puttsesh-id="{{ single_session.id }}" putt-id="{{ putts[num].id }}">
+                        <button class="delete-button">Delete Putt</button>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>

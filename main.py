@@ -117,7 +117,7 @@ def current_puttsesh(sesh_id):
 @app.route('/puttsesh/view')
 @login_required
 def view_puttsesh():
-    all_sessions = PuttSesh.select()
+    all_sessions = PuttSesh.select().order_by(PuttSesh.date.desc())
     return render_template('view_puttsesh.jinja2', all_sessions=all_sessions)
 
 
@@ -185,21 +185,28 @@ def update_putt():
 @app.route('/login', methods=['GET', "POST"])
 def login(error=None):
     if request.method == 'POST':
+        session.pop('error', None)
         # session.pop('logged_in_user', None)
         if request.form['action'] == 'Log In':
             try:
                 login_user = User.get(User.username == request.form['username'].lower())
             except DoesNotExist:
-                session['error'] = 'Username or password incorrect'
+                session['error'] = f"{request.form['username']} could not be found!"
                 return redirect(url_for('login'))
             if login_user.check_password(request.form['password']):
                 session['logged_in_user'] = login_user.username
                 return redirect(url_for('home'))
+            session['error'] = "Password Incorrect!"
         else:
             session.pop('logged_in_user', None)
 
     login_stat = session.get('logged_in_user', None)
     return render_template('login.jinja2', login_stat=login_stat)
+
+
+@app.template_filter('strparsetime')
+def string_parse_time_filter(value, date_format):
+    return datetime.datetime.strptime(value, date_format)
 
 
 if __name__ == "__main__":

@@ -1,21 +1,28 @@
 :root {
     --main-box-shadow: 1px 1px 3px 0px rgba(51, 51, 51, 0.15);
+
+    /* Colors */
     --white-font: #efefef;
     --dark-grey-font: #333;
     --grey-font: #666;
     --light-grey-font: #ddd;
-    --red: #cc0000;
-    --darker-red: #bb0000;
-    --transition-time: 300ms;
 
-    --purple: #6A4973;
+    --first-color: #59253a;
+    --second-color: #78244c;
+    --third-color: #895061;
+    --fourth-color: #0677a1;
+    --fifth-color: #2d4159;
+
+    /* --purple: #6A4973;
     --nude: #E2D9CA;
     --blue-gray: #4A94A8;
-    --dark-blue: #2B293C;
+    --dark-blue: #2B293C; */
 
-    --blue-thick-border: solid 2px var(--blue-gray);
+    --transition-time: 300ms;
+
+    /* --blue-thick-border: solid 2px var(--blue-gray);
     --blue-thin-border: solid 1px var(--blue-gray);
-    --purple-thick-border: solid 2px var(--purple);
+    --purple-thick-border: solid 2px var(--purple); */
 }
 
 * {
@@ -37,7 +44,12 @@ a:hover {
 
 /*#region LOGIN TEMPLATE STYLES */
 
+.login-outer-container {
+    margin: 16.5vh 0 0;
+}
+
 .login-error {
+    color: var(--second-color);
     text-align: center;
 }
 
@@ -90,7 +102,7 @@ nav a:hover {
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin: 50px 0 0;
+    /* margin: 50px 0 0; */
 }
 
 /*#endregion BASE TEMPLATE STYLES */
@@ -105,7 +117,7 @@ nav a:hover {
 }
 
 .putt-avgs-outer-container h2 {
-    background: var(--purple);
+    background: var(--first-color);
     padding: 25px 0;
     text-align: center;
     width: 100vw;
@@ -117,12 +129,10 @@ nav a:hover {
 
 .putt-avg-outer-container {
     align-items: center;
-    background: var(--purple);
-    border-bottom: solid 2px var(--blue-gray);
-    border-top: solid 1px var(--blue-gray);
+    background: var(--fourth-color);
+    border-bottom: solid 2px var(--dark-grey-font);
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
     padding: 20px 0;
     width: 100%;
 }
@@ -140,8 +150,13 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
+.save-putt-button {
+    color: var(--dark-grey-font);
+}
+
 .end-puttsesh-submit {
-    background: var(--red);
+    background: var(--third-color);
+    color: var(--white-font);
 }
 
 /*#endregion END HOME TEMPLATE STYLES */
@@ -168,7 +183,6 @@ input[type=submit]:hover {
 .puttsesh-form input[type=submit], .putt-page-form input[type=submit],
 .save-putt-button {
     border-radius: 2px;
-    color: var(--dark-grey-font);
     font-size: 16px;
     padding: 5px 10px;
     margin: 10px 0;
@@ -214,11 +228,23 @@ input[type=submit]:hover {
 
 /*#region VIEW SESSIONS */
 
+.all-sessions-header {
+    background: var(--first-color);
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.all-sessions-month {
+    width: 100%;
+    padding: 10px 0 10px 16.5vw;
+}
+
 .puttsesh-link {
-    background: var(--purple);
-    /* border-bottom: solid 1px var(--dark-grey-font); */
-    border-bottom: var(--blue-thick-border);
-    margin: 10px 0;
+    background: var(--fourth-color);
+    border-bottom: solid 2px var(--dark-grey-font);
+    /* border-bottom: var(--blue-thick-border); */
+    /* margin: 10px 0; */
     padding: 20px 0;
     text-decoration: none;
     transition: var(--transition-time);
@@ -227,9 +253,9 @@ input[type=submit]:hover {
 }
 
 .puttsesh-link:hover {
-    border-bottom: var(--purple-thick-border);
+    /* border-bottom: var(--purple-thick-border); */
     color: var(--white-font);
-    background: var(--blue-gray);
+    /* background: var(--blue-gray); */
 }
 
 /*#endregion VIEW SESSSIONS */
@@ -237,7 +263,7 @@ input[type=submit]:hover {
 /*#region VIEW SINGLE SESSION */
 
 .view-single-header-container {
-    background: var(--purple);
+    background: var(--first-color);
     display: flex;
     justify-content: space-around;
     padding: 25px 0;
@@ -250,15 +276,17 @@ input[type=submit]:hover {
 
 .single-putt-container {
     align-items: center;
-    background: var(--purple);
-    border-bottom: var(--blue-thick-border);
-    border-top: var(--blue-thin-border);
+    background: var(--fourth-color);
+    border-bottom: solid 2px var(--dark-grey-font);
     display: flex;
     justify-content: space-around;
-    margin: 10px 0;
-    padding: 20px 0;
+    padding: 15px 0;
     transition: 300ms;
     width: 100%;
+}
+
+.single-putt-container:nth-child(even) {
+    background: var(--fifth-color);
 }
 
 .single-putt-info {
@@ -275,29 +303,28 @@ input[type=submit]:hover {
 }
 
 .delete-button, .edit-button, .delete-session-button {
-    border-radius: 2px;
-    color: var(--dark-grey-font);
+    background: var(--third-color);
+    border-radius: 4px;
+    border: outset 2px var(--dark-grey-font);
+    color: var(--white-font);
+    height: 35px;
     padding: 5px 10px;
+    text-decoration: none;
     transition: var(--transition-time);
-}
-
-.delete-session-button {
-    background: var(--nude);
-    border: var(--blue-thick-border);
+    width: 125px;
 }
 
 .edit-button {
-    background: var(--nude);
+    background: var(--fifth-color);
 }
 
-.delete-button {
-    background: var(--dark-blue);
-    border: var(--purple) outset 1px;
-    color: var(--white-font);
+.single-putt-container:nth-child(even) .edit-button {
+    background: var(--fourth-color);
 }
 
 .delete-button:hover, .edit-button:hover, .delete-session-button:hover {
     cursor: pointer;
+    /* text-decoration: underline; */
 }
 
 .gen-update-button, select, option, input {

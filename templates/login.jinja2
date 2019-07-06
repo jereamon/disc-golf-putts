@@ -1,22 +1,24 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-{% if session.get('error') %}
-    <h3 class='login-error'>{{ session.get('error') }}</h3>
-{% endif %}
-<div class="login-form-container">
-    <form class='login-form' method='POST'>
-    {% if login_stat == None %}
-        {# <label>Username #}
-            <input name='username' type='text' placeholder='Username'>
-        {# </label> #}
-        {# <label>Password #}
-            <input name='password' type='password' placeholder='Password'>
-        {# </label> #}
-        <input type='submit' name='action' value='Log In'>
-    {% else %}
-        <input type='submit' name='action' value='Log Out'>
+<div class="login-outer-container">
+    {% if session.get('error') %}
+        <h3 class='login-error'>{{ session.get('error') }}</h3>
     {% endif %}
-    </form>
+    <div class="login-form-container">
+        <form class='login-form' method='POST'>
+        {% if login_stat == None %}
+            {# <label>Username #}
+                <input name='username' type='text' placeholder='Username'>
+            {# </label> #}
+            {# <label>Password #}
+                <input name='password' type='password' placeholder='Password'>
+            {# </label> #}
+            <input type='submit' name='action' value='Log In'>
+        {% else %}
+            <input type='submit' name='action' value='Log Out'>
+        {% endif %}
+        </form>
+    </div>
 </div>
 {% endblock content %}

@@ -2,11 +2,27 @@
 
 {% block content %}
 <div class='outer-container puttsesh-container'>
+<h2 class="all-sessions-header">All Sessions</h2>
+
+{% set month = namespace(m=all_sessions[0].date.strftime('%m-%Y')) %}
 {% for session in all_sessions %}
-<a class="puttsesh-link" href="{{ url_for('view_puttsesh_single', sesh_id=session.id) }}">
-    <h3>{{ session.date.strftime('%m/%d %I:%M%p') }}</h3>
-    <p>No. Putters:{{ session.no_putters }}</p>
-</a>
+    {% if session.date.strftime('%m-%Y') == month.m %}
+        <h2 class='all-sessions-month'>{{ session.date.strftime('%Y, %B') }}</h2>
+        {% if (session.date.strftime('%m')|int) - 1 < 1 %}
+            {% set month.m = '12' + ((session.date.strftime('-%Y')|int + 1)|string) %}
+        {% else %}
+            {% if (month.m|strparsetime('%m-%Y')).strftime('%m')|int - 1 < 10 %}
+                {% set month.m = '0' + ((session.date.strftime('%m')|int - 1)|string) + (session.date.strftime('-%Y')) %}
+            {% else %}
+                {% set month.m = ((session.date.strftime('%m')|int - 1)|string) + (session.date.strftime('-%Y')) %}
+            {% endif %}
+        {% endif %}
+
+    {% endif %}
+    <a class="puttsesh-link" href="{{ url_for('view_puttsesh_single', sesh_id=session.id) }}">
+        <h3>{{ session.date.strftime('%m/%d/%Y %I:%M%p') }}</h3>
+        <p>No. Putters:{{ session.no_putters }}</p>
+    </a>
 {% endfor %}
 </div>
 {% endblock content %}
