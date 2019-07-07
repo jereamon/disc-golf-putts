@@ -239,23 +239,29 @@ input[type=submit]:hover {
     align-items: center;
 } */
 
-/* .putt-page-form {
+.putt-page-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-} */
+}
 
-/* .putt-save-container {
-    transition: background-color 300ms;
-    padding: 0;
-    margin: 20px;
-} */
+.putt-page-form label {
+    padding: 10px 0;
+}
 
-/* .putt-save-success {
+.putt-save-container {
+    width: 75%;
+}
+
+.putt-save-success {
     display: none;
     font-size: 1.5rem;
     text-align: center;
-} */
+}
+
+.hide-avgs-container {
+    display: none;
+}
 
 /*#endregion CURRENT SESSION TEMPLATE STYLES */
 

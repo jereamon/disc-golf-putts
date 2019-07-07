@@ -43,17 +43,21 @@
         <p class='putt-save-success'>Putts Saved</p>
     </div>
 
-    <div class="putt-avgs-outer-container">
-        <h2>Today's Averages</h2>
-        <div class="putt-avgs-inner-container">
-            {% for putt_avg in today_avgs %}
-                <div class='putt-avg-container'>
-                    <h5>{{ putt_avg }}'</h5>
-                    <p>{{ today_avgs[putt_avg] }}%</p>
-                </div>
-            {% endfor %}
+    {% if today_avgs %}
+        <div class="putt-avgs-outer-container">
+    {% else %}
+        <div class="putt-avgs-outer-container hide-avgs-container">
+    {% endif %}
+            <h2>Today's Averages</h2>
+            <div class="putt-avgs-inner-container">
+                {% for putt_avg in today_avgs %}
+                    <div class='putt-avg-container'>
+                        <h5>{{ putt_avg }}'</h5>
+                        <p>{{ today_avgs[putt_avg] }}%</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
 
     <form method='POST' class='putt-page-form'>
         <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
