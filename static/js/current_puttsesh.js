@@ -39,6 +39,7 @@ $(function () {
                 /* ########################## */
                 /* THIS UPDATES THE AVERAGES */
                 avgsContainer = document.querySelector('.putt-avgs-inner-container')
+                avgsContainer.classList.remove('hide-avgs-container');
                 while (avgsContainer.firstChild) {
                     avgsContainer.removeChild(avgsContainer.firstChild)
                 }

@@ -72,7 +72,7 @@ function createUpdateForm(noPutters, puttId) {
     updateButton.innerText = 'Update';
     updateButton.setAttribute('type', 'button');
 
-    for (var i = 0; i < parseInt(noPutters); i++) {
+    for (var i = 0; i < parseInt(noPutters)+1; i++) {
         option = document.createElement('option')
         option.innerText = i
         selectInput.appendChild(option)

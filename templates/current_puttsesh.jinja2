@@ -1,8 +1,11 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-<div class='outer-container putt-page'>
-    <div class='outer-container'>
+<div class='outer-container'>
+<div class="current-puttsesh-header-container">
+    <h2 class="current-puttsesh-header">Current Session</h2>
+</div>
+    <div class='outer-container putt-page'>
         {% if distance %}
             <div class="cur-dist-container">
                 <h4>Current Distance</h4>
@@ -43,25 +46,30 @@
         <p class='putt-save-success'>Putts Saved</p>
     </div>
 
+    <form method='POST' class='putt-page-form'>
+        <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
+    </form>
+
     {% if today_avgs %}
         <div class="putt-avgs-outer-container">
     {% else %}
         <div class="putt-avgs-outer-container hide-avgs-container">
     {% endif %}
-            <h2>Today's Averages</h2>
+            <div class="putt-avgs-header-container">
+                <h2>Today's Averages</h2>
+            </div>
             <div class="putt-avgs-inner-container">
                 {% for putt_avg in today_avgs %}
-                    <div class='putt-avg-container'>
-                        <h5>{{ putt_avg }}'</h5>
-                        <p>{{ today_avgs[putt_avg] }}%</p>
+                    <div class="putt-avg-outer-container">
+                        <div class='putt-avg-container'>
+                            <h5>{{ putt_avg }}'</h5>
+                            <p>{{ today_avgs[putt_avg] }}%</p>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
 
-    <form method='POST' class='putt-page-form'>
-        <input name='action' type='submit' value='End Putting Session' class='end-puttsesh-submit'>
-    </form>
 </div>
 {% endblock content %}
 

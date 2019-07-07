@@ -9,11 +9,11 @@
                 <span class='no_putters'>{{ single_session.no_putters }}</span>
             </p>
         </div>
-        <div puttsesh-id="{{ single_session.id }}">
-            {% if session.get('current_sesh_id') != single_session.id %}
+        {% if session.get('current_sesh_id') != single_session.id %}
+            <div puttsesh-id="{{ single_session.id }}">
                 <button class="delete-session-button delete-button">Delete Session</button>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
     <div class='putts-container'>
         {% for num in range((putts|length) - 1, -1, -1) %}
@@ -21,7 +21,7 @@
                 <div class='single-putt-info'>
                     <p>{{ num + 1 }}
                     <p>Distance: {{ putts[num].distance }}'</p>
-                    <p><span class='putts-made-{{putts.id}}'>{{ putts[num].putts_made }}</span>/{{ single_session.no_putters}}
+                    <p><span class='putts-made-{{putts[num].id}}'>{{ putts[num].putts_made }}</span>/{{ single_session.no_putters}}
                         {{ ((putts[num].putts_made / single_session.no_putters) * 100) | int }}%
                     {# </p> #}
                 </div>

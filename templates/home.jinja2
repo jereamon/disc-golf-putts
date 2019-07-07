@@ -4,7 +4,9 @@
 <div class="outer-container">
     <div class="putt-avgs-outer-container">
         {% if today_avgs %}
-            <h2>Today's Averages</h2>
+            <div class='putt-avgs-header-container'>
+                <h2>Today's Averages</h2>
+            </div>
             <div class="putt-avgs-inner-container">
                     {% for putt_avg in today_avgs %}
                         <div class='putt-avg-outer-container'>
@@ -19,7 +21,9 @@
     </div>
     <div class="putt-avgs-outer-container">
         {% if all_time_avgs %}
-            <h2>All Time Averages</h2>
+            <div class='putt-avgs-header-container'>
+                <h2>All Time Averages</h2>
+            </div>
             <div class="putt-avgs-inner-container">
                     {% for putt_avg in all_time_avgs %}
                         <div class='putt-avg-outer-container'>

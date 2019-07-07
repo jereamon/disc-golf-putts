@@ -20,9 +20,8 @@
 
     --transition-time: 300ms;
 
-    /* --blue-thick-border: solid 2px var(--blue-gray);
-    --blue-thin-border: solid 1px var(--blue-gray);
-    --purple-thick-border: solid 2px var(--purple); */
+    --header-padding: 20px 0;
+    --header-left-margin: 0 0 0 8.25vw;
 }
 
 * {
@@ -145,11 +144,15 @@ nav a:hover::after {
     /* width: 100vw; */
 }
 
-.putt-avgs-outer-container h2 {
+.putt-avgs-header-container {
     background: var(--first-color);
-    padding: 25px 0;
-    text-align: center;
+    padding: var(--header-padding);
     width: 100vw;
+}
+
+.putt-avgs-header-container h2 {
+    /* text-align: center; */
+    margin: var(--header-left-margin);
 }
 
 .putt-avgs-inner-container {
@@ -225,24 +228,39 @@ input[type=submit]:hover {
 
 /*#region CURRENT SESSION TEMPLATE STYLES */
 
-/* .cur-dist-container {
+.current-puttsesh-header-container {
+    background: var(--first-color);
+    padding: var(--header-padding);
+    width: 100%;
+}
+
+.current-puttsesh-header {
+    margin: 0 0 0 16.5vw;
+}
+
+.cur-dist-container {
     align-items: center;
+    /* background: var(--) */
     display: flex;
     flex-direction: column;
-    margin: 0 0 20px;
-    padding: 10px 0;
-    text-align: center;
-} */
+    /* margin: 0 0 20px; */
+    /* padding: 10px 0; */
+}
 
-/* .outer-container.putt-page {
-    flex-direction: column;
-    align-items: center;
-} */
+.outer-container.putt-page {
+    background: var(--fourth-color);
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0;
+    padding: var(--header-padding);
+    width: 100%;
+}
 
 .putt-page-form {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: var(--header-padding);
 }
 
 .putt-page-form label {
@@ -250,7 +268,10 @@ input[type=submit]:hover {
 }
 
 .putt-save-container {
-    width: 75%;
+    background: var(--fifth-color);
+    margin: 0;
+    padding: var(--header-padding);
+    width: 100%;
 }
 
 .putt-save-success {
@@ -267,16 +288,10 @@ input[type=submit]:hover {
 
 /*#region VIEW SESSIONS */
 
-.all-sessions-header {
-    background: var(--first-color);
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-}
-
 .all-sessions-month {
     width: 100%;
-    padding: 10px 0 10px 16.5vw;
+    padding: 10px 8.25vw 10px 0;
+    text-align: right;
 }
 
 .puttsesh-link {
@@ -304,7 +319,7 @@ input[type=submit]:hover {
     background: var(--first-color);
     display: flex;
     justify-content: space-around;
-    padding: 25px 0;
+    padding: var(--header-padding);
     width: 100%;
 }
 
