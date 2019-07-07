@@ -21,7 +21,7 @@
     {% endif %}
     <a class="puttsesh-link" href="{{ url_for('view_puttsesh_single', sesh_id=session.id) }}">
         <h3>{{ session.date.strftime('%m/%d/%Y %I:%M%p') }}</h3>
-        <p>No. Putters:{{ session.no_putters }}</p>
+        <p>No. Putters: {{ session.no_putters }}</p>
     </a>
 {% endfor %}
 </div>

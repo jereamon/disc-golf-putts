@@ -78,31 +78,60 @@ input[type='submit'][value='Log In'], input[type='submit'][value='Log Out'] {
 /*#region BASE TEMPLATE STYLES */
 
 nav {
+    align-items: center;
     /* background: var(--dark-purple); */
     background: var(--dark-grey-font);
-    border-bottom: var(--blue-thick-border);
+    border-bottom: outset 1px var(--white-font);
     display: flex;
+    height: 55px;
     justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    width: 100%;
     z-index: 1;
 }
 
 nav a {
     color: var(--white-font);
+    height: 55px;
+    line-height: 34px;
     padding: 10px 15px;
+    position: relative;
     text-decoration: none;
     transition: var(--transition-time);
 }
 
+/* nav a:not(:last-child) {
+    border-right: solid 1px var(--white-font);
+} */
+
+nav a:not(:last-child)::after {
+    content: '';
+    /* background: var(--white-font); */
+    border-right: solid 1px var(--white-font);
+    height: 27.5px;
+    left: 0;
+    position: absolute;
+    transition: var(--transition-time);
+    top: 13.75;
+    width: 100%;
+}
+
 nav a:hover {
-    background: var(--blue-gray);
+    background: var(--fourth-color);
+    border-bottom: outset 1px var(--white-font);
     color: var(--light-grey-font);
+}
+
+nav a:hover::after {
+    border-right: none;
 }
 
 .outer-container {
     align-items: center;
     display: flex;
     flex-direction: column;
-    /* margin: 50px 0 0; */
+    margin: 56px 0 0;
 }
 
 /*#endregion BASE TEMPLATE STYLES */
@@ -163,10 +192,14 @@ input[type=submit]:hover {
 
 /*#region NEW SESSION STYLES */
 
-.puttsesh-container {
+.puttsesh-container, .new-puttsesh-container {
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+
+.new-puttsesh-container {
+    margin: 16.5vh 0 0;
 }
 
 .puttsesh-form {
@@ -253,9 +286,8 @@ input[type=submit]:hover {
 }
 
 .puttsesh-link:hover {
-    /* border-bottom: var(--purple-thick-border); */
     color: var(--white-font);
-    /* background: var(--blue-gray); */
+    background: var(--third-color);
 }
 
 /*#endregion VIEW SESSSIONS */
@@ -303,7 +335,8 @@ input[type=submit]:hover {
 }
 
 .delete-button, .edit-button, .delete-session-button {
-    background: var(--third-color);
+    /* background: var(--third-color); */
+    background: var(--second-color);
     border-radius: 4px;
     border: outset 2px var(--dark-grey-font);
     color: var(--white-font);
@@ -312,6 +345,10 @@ input[type=submit]:hover {
     text-decoration: none;
     transition: var(--transition-time);
     width: 125px;
+}
+
+.delete-session-button {
+    background: var(--third-color);
 }
 
 .edit-button {
@@ -332,3 +369,6 @@ input[type=submit]:hover {
 }
 
 /*#endregion VIEW SINGLE SESSION */
+
+@media (min-width: 450px) {
+}
