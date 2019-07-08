@@ -1,2 +1,4 @@
 putt_averages.csv
 process_putt_csv.py
+templates/home_backup.jinja2
+templates/current_puttsesh_backup.jinja2

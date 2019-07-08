@@ -84,7 +84,7 @@ nav {
     display: flex;
     height: 55px;
     justify-content: flex-end;
-    /* position: fixed; */
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 1;
@@ -130,7 +130,7 @@ nav a:hover::after {
     align-items: center;
     display: flex;
     flex-direction: column;
-    /* margin: 56px 0 0; */
+    margin: 56px 0 0;
 }
 
 /*#endregion BASE TEMPLATE STYLES */
@@ -155,35 +155,8 @@ nav a:hover::after {
     margin: var(--header-left-margin);
 }
 
-.putt-avgs-selection {
-    align-items: center;
-    /* padding: var(--header-padding); */
-    display: flex;
-    height: 55px;
-    justify-content: flex-end;
-    width: 100%;
-}
-
-.putt-avgs-selection p {
-    cursor: pointer;
-    padding: 20px;
-    transition: 300ms;
-    /* margin-right: 40px; */
-}
-
-.putt-avgs-selection p.active-avg-selection {
-    background: var(--third-color);
-    border-top: var(--dark-grey-font) solid 1px;
-    border-bottom: var(--dark-grey-font) solid 1px;
-    padding: 18px 20px;
-}
-
 .putt-avgs-inner-container {
     width: 100%;
-}
-
-.hidden-avg-container {
-    display: none;
 }
 
 .putt-avg-outer-container {

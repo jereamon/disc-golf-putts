@@ -111,9 +111,10 @@ def current_puttsesh(sesh_id):
     distance = get_putt_distance('get')
 
     current_user = User.get(User.username == session.get('logged_in_user'))
+    all_time_avgs = af.get_avg(current_user, 'ALL_TIME')
     today_avgs = af.get_avg(current_user)
     return render_template('current_puttsesh.jinja2', distance=distance,
-                           today_avgs=today_avgs,
+                           today_avgs=today_avgs, all_time_avgs=all_time_avgs,
                            no_putters=current_session.no_putters)
 
 
