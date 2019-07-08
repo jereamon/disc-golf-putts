@@ -28,7 +28,7 @@ with open('putt_averages.csv', 'r') as in_putt_file:
             else:
                 single_putt_dict[date][distance].append(value)
 
-user = User.get(User.username == 'admin')
+user = User.get(User.username == 'jereamon')
 for date in single_putt_dict:
     # print(date)
     save_date = datetime.strptime(date + '/2019 9:00AM', "%m/%d/%Y %I:%M%p")
