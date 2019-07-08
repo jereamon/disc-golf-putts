@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from datetime import datetime, timedelta
 from flask import session
 from model import PuttSesh, Putt, User
@@ -8,10 +9,10 @@ def get_session_avg(session):
     Takes a session object and returns the putting averages for that session.
     """
     pass
-    session_putts = Putt.select().where(Putt.putt_sesh == session)
+    session_putts = Putt.select().where(Putt.putt_sesh == session).order_by(Putt.distance)
 
-    putt_avgs = {}
-    putt_individual_avg = {}
+    putt_avgs = OrderedDict()
+    putt_individual_avg = OrderedDict()
 
     for putt in session_putts:
         # print(f"In get_session_avgs for loop putt.putts_made = {putt.putts_made} session.no_putters = {session.no_putters} distance = {putt.distance}")
@@ -45,8 +46,8 @@ def get_avg(current_user, all_time=None):
         users_sessions = PuttSesh().select().where(PuttSesh.user == current_user and
                                                    PuttSesh.date >= today_utc_corrected)
 
-    session_avgs = {}
-    today_putt_avgs = {}
+    session_avgs = OrderedDict()
+    today_putt_avgs = OrderedDict()
     for session in users_sessions:
         session_avgs_return = get_session_avg(session)
 

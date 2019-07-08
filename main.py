@@ -64,6 +64,8 @@ def home():
     all_time_avgs = af.get_avg(current_user, 'ALL_TIME')
     today_avgs = af.get_avg(current_user)
 
+    # return render_template('home.jinja2', all_time_avgs=sorted(all_time_avgs),
+    #                        today_avgs=sorted(today_avgs))
     return render_template('home.jinja2', all_time_avgs=all_time_avgs,
                            today_avgs=today_avgs)
 
