@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
 
+
 distances = [18, 21, 24, 27, 30, 33]\
 
 
@@ -197,6 +198,9 @@ def login(error=None):
                 return redirect(url_for('login'))
             if login_user.check_password(request.form['password']):
                 session['logged_in_user'] = login_user.username
+
+                session.permanent = True
+
                 return redirect(url_for('home'))
             session['error'] = "Password Incorrect!"
         else:
