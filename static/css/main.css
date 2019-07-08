@@ -141,13 +141,13 @@ nav a:hover::after {
     align-items: center;
     display: flex;
     flex-direction: column;
-    /* width: 100vw; */
+    width: 100%;
 }
 
 .putt-avgs-header-container {
     background: var(--first-color);
     padding: var(--header-padding);
-    width: 100vw;
+    width: 100%;
 }
 
 .putt-avgs-header-container h2 {
