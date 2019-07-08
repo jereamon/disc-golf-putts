@@ -100,10 +100,6 @@ nav a {
     transition: var(--transition-time);
 }
 
-/* nav a:not(:last-child) {
-    border-right: solid 1px var(--white-font);
-} */
-
 nav a:not(:last-child)::after {
     content: '';
     /* background: var(--white-font); */
@@ -124,6 +120,12 @@ nav a:hover {
 
 nav a:hover::after {
     border-right: none;
+}
+
+@media (max-width: 480px) {
+    nav a {
+        font-size: 14px;
+    }
 }
 
 .outer-container {

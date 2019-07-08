@@ -38,17 +38,26 @@ $(function () {
 
                 /* ########################## */
                 /* THIS UPDATES THE AVERAGES */
-                avgsContainer = document.querySelector('.putt-avgs-inner-container')
-                avgsContainer.classList.remove('hide-avgs-container');
-                while (avgsContainer.firstChild) {
-                    avgsContainer.removeChild(avgsContainer.firstChild)
+                todayAvgsContainer = document.querySelector('.today-avg-container')
+                while (todayAvgsContainer.firstChild) {
+                    todayAvgsContainer.removeChild(todayAvgsContainer.firstChild)
                 }
 
-                var todayAvgs = parsed_response['today_avgs']
+                allTimeAvgsContainer = document.querySelector('.all-time-avg-container')
+                while (allTimeAvgsContainer.firstChild) {
+                    allTimeAvgsContainer.removeChild(allTimeAvgsContainer.firstChild)
+                }
+
+                var todayAvgs = parsed_response['today_avgs'],
+                    allTimeAvgs = parsed_response['all_time_avgs'];
+
                 for (var puttAvg of Object.entries(todayAvgs)) {
-                    console.log(puttAvg)
-                    puttAvgContainer = document.createElement('div')
-                    puttAvgContainer.classList.add('putt-avg-container')
+                    // console.log(puttAvg)
+                    puttAvgTodayContainer = document.createElement('div')
+                    puttAvgTodayContainer.classList.add('putt-avg-container')
+
+                    puttAvgOuterContainer = document.createElement('div')
+                    puttAvgOuterContainer.classList.add('putt-avg-outer-container')
 
                     h5 = document.createElement('h5')
                     h5.innerText = puttAvg[0] + "'"
@@ -56,9 +65,31 @@ $(function () {
                     p = document.createElement('p')
                     p.innerText = puttAvg[1] + '%'
 
-                    puttAvgContainer.appendChild(h5)
-                    puttAvgContainer.appendChild(p)
-                    avgsContainer.appendChild(puttAvgContainer)
+                    puttAvgTodayContainer.appendChild(h5)
+                    puttAvgTodayContainer.appendChild(p)
+                    puttAvgOuterContainer.appendChild(puttAvgTodayContainer)
+                    todayAvgsContainer.appendChild(puttAvgOuterContainer)
+                /* ########################## */
+                }
+
+                for (var puttAvg of Object.entries(allTimeAvgs)) {
+                    // console.log(puttAvg)
+                    puttAvgTodayContainer = document.createElement('div')
+                    puttAvgTodayContainer.classList.add('putt-avg-container')
+
+                    puttAvgOuterContainer = document.createElement('div')
+                    puttAvgOuterContainer.classList.add('putt-avg-outer-container')
+
+                    h5 = document.createElement('h5')
+                    h5.innerText = puttAvg[0] + "'"
+
+                    p = document.createElement('p')
+                    p.innerText = puttAvg[1] + '%'
+
+                    puttAvgTodayContainer.appendChild(h5)
+                    puttAvgTodayContainer.appendChild(p)
+                    puttAvgOuterContainer.appendChild(puttAvgTodayContainer)
+                    allTimeAvgsContainer.appendChild(puttAvgOuterContainer)
                 /* ########################## */
                 }
             },

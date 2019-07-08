@@ -162,12 +162,14 @@ def save_putt():
     save_code = new_putt.save()
 
     current_user = User.get(User.username == session.get('logged_in_user'))
+    all_time_avgs=af.get_avg(current_user, 'all_time')
     today_avgs = af.get_avg(current_user)
 
     distance = get_putt_distance('post')
 
     return json.dumps({'status': 'OK', 'distance': distance,
-                       'save_code': save_code, 'today_avgs': today_avgs})
+                       'save_code': save_code, 'today_avgs': today_avgs,
+                       'all_time_avgs': all_time_avgs})
 
 
 @app.route('/update_putt', methods=['POST'])
