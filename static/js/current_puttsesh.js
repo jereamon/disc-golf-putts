@@ -74,8 +74,8 @@ $(function () {
 
                 for (var puttAvg of Object.entries(allTimeAvgs)) {
                     // console.log(puttAvg)
-                    puttAvgTodayContainer = document.createElement('div')
-                    puttAvgTodayContainer.classList.add('putt-avg-container')
+                    puttAvgContainer = document.createElement('div')
+                    puttAvgContainer.classList.add('putt-avg-container')
 
                     puttAvgOuterContainer = document.createElement('div')
                     puttAvgOuterContainer.classList.add('putt-avg-outer-container')
@@ -86,9 +86,9 @@ $(function () {
                     p = document.createElement('p')
                     p.innerText = puttAvg[1] + '%'
 
-                    puttAvgTodayContainer.appendChild(h5)
-                    puttAvgTodayContainer.appendChild(p)
-                    puttAvgOuterContainer.appendChild(puttAvgTodayContainer)
+                    puttAvgContainer.appendChild(h5)
+                    puttAvgContainer.appendChild(p)
+                    puttAvgOuterContainer.appendChild(puttAvgContainer)
                     allTimeAvgsContainer.appendChild(puttAvgOuterContainer)
                 /* ########################## */
                 }
