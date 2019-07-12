@@ -1,4 +1,4 @@
-from collections import OrderedDict
+# from collections import OrderedDict
 from datetime import datetime, timedelta
 from flask import session
 from model import PuttSesh, Putt, User
@@ -12,8 +12,8 @@ def get_session_avg(session):
     # that session and orders them by their Putt.distance.
     session_putts = Putt.select().where(Putt.putt_sesh == session).order_by(Putt.distance)
 
-    session_putt_avgs = OrderedDict()
-    putt_individual_avg = OrderedDict()
+    session_putt_avgs = {}
+    putt_individual_avg = {}
 
     # Loops the putts for the current session.
     for putt in session_putts:
@@ -53,8 +53,8 @@ def get_avg(current_user, all_time=None):
                                                    PuttSesh.date >= today_utc_corrected)
 
     # Create OrderedDicts to maintain low to high distance averages.
-    session_avgs = OrderedDict()
-    putt_avgs = OrderedDict()
+    session_avgs = {}
+    putt_avgs = {}
 
     for session in users_sessions:
         # this will be an ordered dict containing the averages for an individual
@@ -77,7 +77,7 @@ def get_avg(current_user, all_time=None):
 
     # Finally we'll loop our populated dict and find the average of the list of
     # averages stored as values in it.
-    for distance in session_avgs:
+    for distance in sorted(session_avgs.keys()):
         putt_avgs[distance] = int(
             round((sum(session_avgs[distance]) / len(session_avgs[distance])), 2) * 100)
 
