@@ -13,5 +13,5 @@ I used ajax to query the database and save each putt so that the page can be upd
   <img src="https://github.com/jereamon/disc-golf-putts/blob/master/dg-putts-individual-session.png" width="75%">
 </p>
 <p align="center">
-  <img stv="https://github.com/jereamon/disc-golf-putts/blob/master/dg-putts-save-putt.png" width="75%">
+  <img src="https://github.com/jereamon/disc-golf-putts/blob/master/dg-putts-save-putt.png" width="75%">
 </p>
