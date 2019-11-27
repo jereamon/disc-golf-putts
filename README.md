@@ -8,3 +8,8 @@ When creating a putting session the user can select the option to input distance
 or be given random distances between 15 and 33 feet.
 
 I used ajax to query the database and save each putt so that the page can be updated dynamically without having to be refreshed.
+
+<p align="center">
+  <img src="https://github.com/jereamon/disc-golf-putts/blob/master/dg-putts-individual-session.png" width="33%">
+  <img stv="https://github.com/jereamon/disc-golf-putts/blob/master/dg-putts-save-putt.png" width="33%">
+</p>
