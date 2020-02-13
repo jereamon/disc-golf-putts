@@ -1,3 +1,5 @@
+https://dg-putts.herokuapp.com/
+
 I got totally hooked on disc golf a couple years ago. This is a simple Flask application to track my backyard putting averages. 
 
 Putting sessions are written to the database to keep track of the time of the session and the number of putters I was using.  
